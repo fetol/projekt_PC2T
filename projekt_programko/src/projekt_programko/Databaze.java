@@ -6,9 +6,4 @@ public class Databaze {
 		mamvelkypenis();
 	}
 
-	private static void mamvelkypenis() {
-	
-		
-	}
-
 }
