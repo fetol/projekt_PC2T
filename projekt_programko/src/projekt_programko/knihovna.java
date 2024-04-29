@@ -24,7 +24,7 @@ public class knihovna {
 		
 		}
 		public void smazaniknihy(String nazev) {
-			knihovna.remove(nazev)
+			knihovna.remove(nazev);
 		}
 		public void listBooks() {
 	        for (Book book : library.values()) {
