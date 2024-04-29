@@ -4,10 +4,10 @@ package projekt_programko;
 import java.awt.print.Book;
 import java.util.*;
 
-public class Knihovna {
+public class knihovna {
 	private Map<String, Book> knihovna;
 	
-	public Knihovna() {
+	public knihovna() {
 		this.knihy = new HashMap<>();
 	}
 	

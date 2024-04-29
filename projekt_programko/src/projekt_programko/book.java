@@ -1,4 +1,6 @@
 package projekt_programko;
+
+
 import java.util.List;
 public class book {
 	private String nazev;
@@ -10,7 +12,7 @@ public class book {
 		this.nazev= nazev;
 		this.autor= autor;
 		this.rok_vydani = rok_vydani;
-		this.stav_vypujcky = false
+		this.stav_vypujcky = false;
 	}
 	public String getNazev() {
 		return nazev;
@@ -28,7 +30,7 @@ public class book {
 		return rok_vydani;
 	}
 	public int setRok_vydaní() {
-		this.rok_vydani = rok_vydani;
+		return this.rok_vydani = rok_vydani;
 	}
 	public boolean stav_vypujcky() {
 		return stav_vypujcky;
