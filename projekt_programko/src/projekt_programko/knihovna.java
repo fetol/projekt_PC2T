@@ -43,7 +43,7 @@ public class knihovna {
 	            System.out.println("Nazev: " + book.getNazev());
 	            System.out.println("Autor: " + book.getAutor());
 	            System.out.println("Rok vydani: " + book.getRok_vydani());
-	            System.out.println("Typ knihy"+ book.getTyp());
+	            System.out.println("Typ knihy: "+ book.getTyp());
 	            System.out.println("Pujceno: " + (book.stav_vypujcky() ? "Ano" : "Ne"));
 	            System.out.println();
 	        }
@@ -59,7 +59,7 @@ public class knihovna {
 				System.out.println("Nazev: " + book.getNazev());
 	            System.out.println("Autor: " + book.getAutor());
 	            System.out.println("Rok vydani: " + book.getRok_vydani());
-	            System.out.println("Typ knihy"+ book.getTyp());
+	            System.out.println("Typ knihy: "+ book.getTyp());
 	            System.out.println("Pujceno: " + (book.stav_vypujcky() ? "Ano" : "Ne"));
 	            System.out.println();
 		} else {
@@ -73,7 +73,7 @@ public class knihovna {
 			if (book.getAutor().contains(autor)) {
 				System.out.println("Nazev: " + book.getNazev());
 				System.out.println("Rok vydani: " + book.getRok_vydani());
-				 System.out.println("Typ knihy"+ book.getTyp());
+				 System.out.println("Typ knihy: "+ book.getTyp());
 				System.out.println();
 				found = true;
 			}
@@ -89,7 +89,7 @@ public class knihovna {
 			if(book.stav_vypujcky()) {
 				 	System.out.println("Nazev: " + book.getNazev());
 	                System.out.println("Rok vydani: " + book.getRok_vydani());
-	                System.out.println("Typ knihy"+ book.getTyp());
+	                System.out.println("Typ knihy: "+ book.getTyp());
 	                
 	                System.out.println();
 	                found = true;	
@@ -194,7 +194,7 @@ public class knihovna {
 				System.out.println("Nazev: " + book.getNazev());
 	            System.out.println("Autor: " + book.getAutor());
 	            System.out.println("Rok vydani: " + book.getRok_vydani());
-	            System.out.println("Typ knihy"+ book.getTyp());
+	            System.out.println("Typ knihy: "+ book.getTyp());
 	            System.out.println("Pujceno: " + (book.stav_vypujcky() ? "Ano" : "Ne"));
 	            System.out.println();
 			}
