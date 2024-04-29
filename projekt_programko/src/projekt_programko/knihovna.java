@@ -13,7 +13,7 @@ public class knihovna {
 	
 	public void addKnihu(String nazev, List<String> autor, int rok_vydani) {
 		knihovna.put(nazev, new book(nazev,autor,rok_vydani));
-	}
+	}sfsdfds
 	
 	public void updateKnihy (String nazev, String autor, int rok_vydani, boolean stav_vypujcky) {
 		Book book = knihy.get(nazev);
