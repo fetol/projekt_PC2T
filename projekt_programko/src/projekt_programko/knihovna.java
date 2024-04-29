@@ -208,7 +208,8 @@ public class knihovna {
 	 
 		 
 	
-	
+	//DODELAT!!!! Nacitani knihy ze souboru
+	// DODELAT!!! SQL NACITANI A UKLADANI 
 	
 	
 	
