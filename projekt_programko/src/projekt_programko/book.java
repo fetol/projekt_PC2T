@@ -33,7 +33,7 @@ public class book {
 	public boolean stav_vypujcky() {
 		return stav_vypujcky;
 	}
-	public void set stav_vypujcky(boolean pujceno) {
+	public void set_stav_vypujcky(boolean pujceno) {
 		if(!pujceno) {
 			this.stav_vypujcky = pujceno;
 		}
