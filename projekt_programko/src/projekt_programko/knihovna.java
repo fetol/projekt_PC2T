@@ -1,10 +1,11 @@
 package projekt_programko;
 
 
+import java.awt.print.Book;
 import java.util.*;
 
 public class Knihovna {
-	private Map<String, book> knihovna;
+	private Map<String, Book> knihovna;
 	
 	public Knihovna() {
 		this.knihy = new HashMap<>();
@@ -15,11 +16,24 @@ public class Knihovna {
 	}
 	
 	public void updateKnihy (String nazev, String autor, int rok_vydani, boolean stav_vypujcky) {
-		book book = knihy.get(nazev);
+		Book book = knihy.get(nazev);
 		if (book != null) {
 			book.getAutor().add(autor)
 			book.set_stav_vypujcky(vypujceno);
+			book.
+		
 		}
+		public void smazaniknihy(String nazev) {
+			knihovna.remove(nazev)
+		}
+		public void listBooks() {
+	        for (Book book : library.values()) {
+	            System.out.println("Title: " + book.getClass());
+	            System.out.println("Authors: " + book.getAuthors());
+	            System.out.println("Year: " + book.getYear());
+	            System.out.println("Borrowed: " + (book.isBorrowed() ? "Yes" : "No"));
+	            System.out.println();
+	        }
 	}
 	
 	
