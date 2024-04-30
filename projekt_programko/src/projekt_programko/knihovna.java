@@ -12,13 +12,13 @@ public class knihovna {
 		this.knihovna = new HashMap<>();
 	}
 	
-	public void addKnihu(String nazev, List<String> autor, int rok_vydani, String typ, String zanr, int rocniKod) {
-        if (typ.equals("ucebnice")) {
-            knihovna.put(nazev, new book(nazev, autor, rok_vydani, "ucebnice"));
-        } else if (typ.equals("novela")) { // Fixed the typo in the condition
-            knihovna.put(nazev, new book(nazev, autor, rok_vydani, "novela"));
-        }
-    }
+	 public void addKnihu(String nazev, List<String> autor, int rok_vydani, String typ, Zanr zanr, int rocniKod) {
+	        if (typ.equals("ucebnice")) {
+	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, rocniKod));
+	        } else if (typ.equals("novela")) {
+	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, zanr));
+	        }
+	    }
 	
 	public void updateKnihy (String nazev, String autor, int rok_vydani, boolean stav_vypujcky) {
 		book book = knihovna.get(nazev);
@@ -26,9 +26,6 @@ public class knihovna {
 			book.getAutor().add(autor);
 			book.setRok_vydani(rok_vydani);
 			book.set_stav_vypujcky(stav_vypujcky);
-			
-			
-		
 		}
 	}
 		
