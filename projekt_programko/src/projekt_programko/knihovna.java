@@ -1,6 +1,9 @@
 package projekt_programko;
 import java.io.*;
 import java.util.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
 
 public class knihovna {
 	private Map<String, book> knihovna;
@@ -205,7 +208,33 @@ public class knihovna {
 		
 		
 	}
+	public boolean nacistknihudodzosouboru(String nazev_souboru) {
+		try {
+	        File file = new File(nazev_souboru);
+	        Scanner scanner = new Scanner(file);
+	        while (scanner.hasNextLine()) {
+	            String line = scanner.nextLine();
+	            String[] parts = line.split(",");
+	            if (parts.length == 5) {
+	                String nazevKnihy = parts[0];
+	                String autor = parts[1];
+	                int rokVydani = Integer.parseInt(parts[2]);
+	                String typ = parts[3];
+	                boolean pujceno = Boolean.parseBoolean(parts[4]);
+	            }
+	        }
+	        scanner.close();
+	    } catch (FileNotFoundException e) {
+	        e.printStackTrace();
+	    }
+		return true;
 	}
+		
+	}
+
+		
+	
+	
 	 
 		 
 	

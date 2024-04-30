@@ -50,6 +50,7 @@ public class App {
 		int rok_vydani;
 		String typ;
 		boolean stav_vypujcky;
+		String nazev_souboru;
 		boolean run=true;
 		while(run)
 		{
@@ -125,9 +126,12 @@ public class App {
 					knihovna.ulozitknihudodsouboru(nazev);
 					break;
 				case 11:
-					
-					break;
-					
+					System.out.println("Zadejte nazev souboru k nacteni");
+					if (knihovna.nacistknihudodzosouboru(sc.next()))
+						System.out.println("kniha nactena");
+					else
+						System.out.println("knihu nebylo mozno nacist");
+					break;				
 				case 12:
 					run=false;
 					break;
