@@ -74,10 +74,15 @@ public class App {
 				case 1:
 					System.out.println("Zadejte nazov,autora,rok_vydania,typ_knihy");
 					nazev=sc.next();
+					
 	                autor.add(sc.next());
 					rok_vydani=App.pouzeCelaCisla(sc);
 					typ=sc.next();
-					knihovna.addKnihu(nazev, autor, rok_vydani, typ);
+					if (typ.equals("novela") || typ.equals("ucebnice")) {
+                        knihovna.addKnihu(nazev, autor, rok_vydani, typ, null, 0);
+                    } else {
+                        System.out.println("Zly typ knihy.Kniha nebude pridana");
+                    }
 					break;
 				case 2:
 					System.out.println("Zadejte nazov,autora,rok_vydania,typ_knihy,stav_vypujcky");
