@@ -1,5 +1,7 @@
 package projekt_programko;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -42,6 +44,12 @@ public class App {
 		
 		knihovna knihovna = new knihovna();
 		Scanner sc=new Scanner(System.in);
+		String nazev;
+		List<String> autor=new ArrayList<>();
+		String autor2;
+		int rok_vydani;
+		String typ;
+		boolean stav_vypujcky;
 		boolean run=true;
 		while(run)
 		{
@@ -63,19 +71,38 @@ public class App {
 			switch(volba)
 			{
 				case 1:
-					System.out.println("Zadejte jmeno studenta, rok narozeni");
-
+					System.out.println("Zadejte nazov,autora,rok_vydania,typ_knihy");
+					nazev=sc.next();
+	                autor.add(sc.next());
+					rok_vydani=App.pouzeCelaCisla(sc);
+					typ=sc.next();
+					knihovna.addKnihu(nazev, autor, rok_vydani, typ);
 					break;
 				case 2:
-					System.out.println("Zadejte jmeno a prumer studenta");
-					
-					break;
+					System.out.println("Zadejte nazov,autora,rok_vydania,typ_knihy,stav_vypujcky");
+					nazev=sc.next();
+	                autor2=sc.next();
+					rok_vydani=App.pouzeCelaCisla(sc);
+					typ=sc.next();
+					System.out.println(" Pozicana/vracena (true or false): ");
+				    stav_vypujcky = sc.hasNextBoolean();
+				    if (stav_vypujcky) {
+				        stav_vypujcky = sc.nextBoolean();
+				    } else {
+				        System.out.println("Invalid input. Please enter a valid boolean value.");
+				    }
+				    knihovna.updateKnihy(nazev,autor2,rok_vydani,stav_vypujcky);
+				    break;
 				case 3:
-					System.out.println("Zadejte jmeno studenta");
-					
+					System.out.println("Zadejte nazev knihy k odstraneni");
+					nazev=sc.next();
+					if (knihovna.smazaniknihy(nazev))
+						System.out.println(nazev + " odstranen ");
+					else
+						System.out.println(nazev + " neni v databazi ");				
 					break;
 				case 4:
-					System.out.println("Zadejte jmeno studenta k odstraneni");
+					System.out.println("");
 					
 				case 5:
 					 knihovna.listovaniKnih();
@@ -93,7 +120,9 @@ public class App {
 	
 					break;
 				case 10:
-	
+					System.out.println("Zadejte nazev knihy k ulozeni");
+					nazev=sc.next();
+					knihovna.ulozitknihudodsouboru(nazev);
 					break;
 				case 11:
 					

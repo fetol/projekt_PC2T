@@ -18,7 +18,6 @@ public class knihovna {
 			knihovna.put(nazev, new book(nazev, autor, rok_vydani, "novela"));
 		}
 		
-	
 	}
 	
 	public void updateKnihy (String nazev, String autor, int rok_vydani, boolean stav_vypujcky) {
@@ -33,8 +32,10 @@ public class knihovna {
 		}
 	}
 		
-	public void smazaniknihy(String nazev) {
-			knihovna.remove(nazev);
+	public boolean smazaniknihy(String nazev) {
+		if (knihovna.remove(nazev)!=null)
+			return true;
+		return false;
 		}
 		
 		
@@ -204,7 +205,7 @@ public class knihovna {
 		
 		
 	}
-}
+	}
 	 
 		 
 	
