@@ -12,16 +12,13 @@ public class knihovna {
 		this.knihovna = new HashMap<>();
 	}
 	
-	public void addKnihu(String nazev, List<String> autor, int rok_vydani, String typ) {
-		if (typ.equals("ucebnice")) {
-			typ="ucebnice";
-			knihovna.put(nazev, new book (nazev, autor, rok_vydani, "ucebnice"));
-		} else {
-			typ="novela";
-			knihovna.put(nazev, new book(nazev, autor, rok_vydani, "novela"));
-		}
-		
-	}
+	public void addKnihu(String nazev, List<String> autor, int rok_vydani, String typ, String zanr,int rocniKod) {
+        if (typ.equals("ucebnice")) {
+            knihovna.put(nazev, new book(nazev, autor, rok_vydani, "ucebnice"));
+        }  else  typ.equals("novela"); {
+            knihovna.put(nazev, new book(nazev, autor, rok_vydani, "novela"));
+        }
+	}    
 	
 	public void updateKnihy (String nazev, String autor, int rok_vydani, boolean stav_vypujcky) {
 		book book = knihovna.get(nazev);
@@ -51,9 +48,7 @@ public class knihovna {
 	            System.out.println("Pujceno: " + (book.stav_vypujcky() ? "Ano" : "Ne"));
 	            System.out.println();
 	        }
-		
-	
-		  
+		 
 	  }
 	
 	
@@ -113,7 +108,6 @@ public class knihovna {
                 System.out.println("Kniha byla ulozena do souboru: " + nazev + ".txt");
 				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {

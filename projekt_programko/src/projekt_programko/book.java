@@ -1,14 +1,21 @@
 package projekt_programko;
 import java.util.List;
 
+enum Zanr {
+    BELETRIE,
+    FANTAZIE,
+    ROMANTIKA,
+    VOJNA,
+    THRILLER
+}
 
 public class book {
 	private String nazev;
-	private String zanr;
 	private List <String> autor;
 	private int rok_vydani;
 	private boolean stav_vypujcky;
 	private String typ;
+	private Zanr zanr;
 	private int rocniKod;
 
 	    
@@ -19,10 +26,12 @@ public class book {
 		this.stav_vypujcky = false;
 		this.typ = typ;
 	}
-	public book(String nazev, List<String> autor, int rok_vydani, String typ, String zanr) {
+	//konstruktor pre novely
+	public book(String nazev, List<String> autor, int rok_vydani, String typ, Zanr zanr) {
 	        this(nazev, autor, rok_vydani, typ); 
 	        this.zanr = zanr;
 	}
+	//konstruktor pre ucebnice
 	public book(String nazev, List<String> autor, int rok_vydani, String typ, int rocniKod) {
         this(nazev, autor, rok_vydani, typ); 
         this.rocniKod = rocniKod;
@@ -30,10 +39,10 @@ public class book {
 	public String getNazev() {
 		return nazev;
 	}
-	public String getZanr() {
+	public Zanr getZanr() {
 		return zanr;
 	}
-	public void setZaner(String zanr) {
+	public void setZaner(Zanr zanr) {
 		this.zanr = zanr;
 	}
 	public void setNazev(String nazev) {
@@ -55,10 +64,10 @@ public class book {
 		return stav_vypujcky;
 	}
 	public int getRocniKod() {
-	        return rocniKod;
+	    return rocniKod;
 	}
 	public void setRocniKod(int rocniKod) {
-	        this.rocniKod = rocniKod;
+		this.rocniKod = rocniKod;
 	}
 	public void set_stav_vypujcky(boolean pujceno) {
 		if(!pujceno) {
