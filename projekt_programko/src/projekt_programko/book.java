@@ -19,23 +19,15 @@ public class book {
 	private int rocniKod;
 
 	    
-	public book (String nazev, List <String> autor, int rok_vydani, String typ) {
+	public book (String nazev, List <String> autor, int rok_vydani, String typ ,Zanr zanr,int rocniKod) {
 		this.nazev= nazev;
 		this.autor= autor;
 		this.rok_vydani = rok_vydani;
 		this.stav_vypujcky = false;
 		this.typ = typ;
+		this.zanr = zanr;
+		this.rocniKod = rocniKod;
 	}
-	//konstruktor pre novely
-	public book(String nazev, List<String> autor, int rok_vydani, String typ, Zanr zanr) {
-	        this(nazev, autor, rok_vydani, typ); 
-	        this.zanr = zanr;
-	}
-	//konstruktor pre ucebnice
-	public book(String nazev, List<String> autor, int rok_vydani, String typ, int rocniKod) {
-        this(nazev, autor, rok_vydani, typ); 
-        this.rocniKod = rocniKod;
-    }
 	public String getNazev() {
 		return nazev;
 	}

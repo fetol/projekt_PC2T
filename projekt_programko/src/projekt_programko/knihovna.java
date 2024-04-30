@@ -12,11 +12,49 @@ public class knihovna {
 		this.knihovna = new HashMap<>();
 	}
 	
-	 public void addKnihu(String nazev, List<String> autor, int rok_vydani, String typ, Zanr zanr, int rocniKod) {
-	        if (typ.equals("ucebnice")) {
-	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, rocniKod));
-	        } else if (typ.equals("novela")) {
-	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, zanr));
+	 public void addKnihu(Scanner scanner) {
+	        System.out.println("Aky typ knihy:");
+	        System.out.println("1.Ucebnica");
+	        System.out.println("2.Romany");
+	        int bookVyber = pouzeCelaCisla(scanner);
+	        
+	        scanner.nextLine();
+
+	        System.out.println("Zadaj nazov: ");
+	        String nazev = scanner.nextLine();
+
+	        System.out.println("Zadaj autora ak viac oddel ich ciarkov: ");
+	        String[] authorsArray = scanner.nextLine().split(",");
+	        List<String> autor = new ArrayList<>();
+	        for (String author : authorsArray) {
+	            autor.add(author.trim());
+	        }
+
+	        System.out.println("Zadaj rok vydania: ");
+	        int rok_vydani = pouzeCelaCisla(scanner);
+
+	        if (bookVyber == 1) {
+	            System.out.println("Zadaj pre aku triedu to je: ");
+	            int rocniKod = pouzeCelaCisla(scanner);
+	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, "ucebnice", null, rocniKod));
+	            System.out.println("Ucebnica pridana do kniznice: " + nazev);
+	            System.out.println("Typ: Ucebnica");
+	            System.out.println("Trieda cislo: " + rocniKod);
+	        } else if (bookVyber == 2) {
+	            System.out.println("Vyber si zaner:");
+	            System.out.println("1. Historický");
+	            System.out.println("2. Fantasy");
+	            System.out.println("3. Romantický");
+	            System.out.println("4. Vojna");
+	            System.out.println("5. Thriller");
+	            int genreChoice = pouzeCelaCisla(scanner);
+	            Zanr zanr = Zanr.values()[genreChoice - 1];
+	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, "novela", zanr, 0));
+	            System.out.println("Roman pridany do kniznice: " + nazev);
+	            System.out.println("Typ: Roman");
+	            System.out.println("Zaner: " + zanr);
+	        } else {
+	            System.out.println("Zly input.Kniha neni pridana do kniznice.");
 	        }
 	    }
 	
@@ -42,6 +80,8 @@ public class knihovna {
 	            System.out.println("Autor: " + book.getAutor());
 	            System.out.println("Rok vydani: " + book.getRok_vydani());
 	            System.out.println("Typ knihy: "+ book.getTyp());
+	            System.out.println("Zaner: "+ book.getZanr());
+	            System.out.println("Pre triedu: "+ book.getRocniKod());
 	            System.out.println("Pujceno: " + (book.stav_vypujcky() ? "Ano" : "Ne"));
 	            System.out.println();
 	        }
@@ -219,6 +259,22 @@ public class knihovna {
 	        e.printStackTrace();
 	    }
 		return true;
+	}
+	public static int pouzeCelaCisla(Scanner sc) 
+	{
+		int cislo = 0;
+		try
+		{
+			cislo = sc.nextInt();
+		}
+		catch(Exception e)
+		{
+			System.out.println("Nastala vyjimka typu "+e.toString());
+			System.out.println("zadejte prosim cele cislo ");
+			sc.nextLine();
+			cislo = pouzeCelaCisla(sc);
+		}
+		return cislo;
 	}
 		
 	}

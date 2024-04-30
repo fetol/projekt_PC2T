@@ -73,15 +73,10 @@ public class App {
 			switch(volba)
 			{
 				case 1:
-					System.out.println("Zadejte nazov,autora,rok_vydania,typ_knihy");
-					nazev=sc.next();
-	                autor.add(sc.next());
-					rok_vydani=App.pouzeCelaCisla(sc);
-					typ=sc.next();
-					knihovna.addKnihu(nazev, autor, rok_vydani, typ);
+					knihovna.addKnihu(sc);
 					break;
 				case 2:
-					System.out.println("Zadejte nazov,autora,rok_vydania,typ_knihy,stav_vypujcky");
+					System.out.println("Zadejte nazov,autora,rok_vydania,typ_knihy,stav_vypujcky"); //chybne
 					nazev=sc.next();
 	                autor2=sc.next();
 					rok_vydani=App.pouzeCelaCisla(sc);
