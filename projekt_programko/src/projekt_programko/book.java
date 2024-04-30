@@ -1,5 +1,7 @@
 package projekt_programko;
 import java.util.List;
+
+
 public class book {
 	private String nazev;
 	private String zanr;
@@ -7,7 +9,9 @@ public class book {
 	private int rok_vydani;
 	private boolean stav_vypujcky;
 	private String typ;
-	
+	private int rocniKod;
+
+	    
 	public book (String nazev, List <String> autor, int rok_vydani, String typ) {
 		this.nazev= nazev;
 		this.autor= autor;
@@ -15,6 +19,14 @@ public class book {
 		this.stav_vypujcky = false;
 		this.typ = typ;
 	}
+	public book(String nazev, List<String> autor, int rok_vydani, String typ, String zanr) {
+	        this(nazev, autor, rok_vydani, typ); 
+	        this.zanr = zanr;
+	}
+	public book(String nazev, List<String> autor, int rok_vydani, String typ, int rocniKod) {
+        this(nazev, autor, rok_vydani, typ); 
+        this.rocniKod = rocniKod;
+    }
 	public String getNazev() {
 		return nazev;
 	}
@@ -41,6 +53,12 @@ public class book {
 	}
 	public boolean stav_vypujcky() {
 		return stav_vypujcky;
+	}
+	public int getRocniKod() {
+	        return rocniKod;
+	}
+	public void setRocniKod(int rocniKod) {
+	        this.rocniKod = rocniKod;
 	}
 	public void set_stav_vypujcky(boolean pujceno) {
 		if(!pujceno) {
