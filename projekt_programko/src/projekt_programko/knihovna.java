@@ -4,6 +4,10 @@ import java.util.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class knihovna {
 	private Map<String, book> knihovna;
@@ -278,8 +282,18 @@ public class knihovna {
 		}
 		return cislo;
 	}
-		
-	}
+		private static final String DB_URL = "mysql.fetol-dev.svc.cluster.local";
+	    private static final String DB_USER = "fetol";
+	    private static final String DB_PASSWORD = "oldajefrajer";
+
+
+	    public void connect() {
+	            System.out.println("Connected to the database.");
+	       
+	        }
+	
+}
+	
 
 		
 	

@@ -54,6 +54,7 @@ public class App {
 		autor.clear();
 		boolean run=true;
 		while(run)
+		
 		{
 			System.out.println("Vyberte pozadovanou cinnost:");
 			System.out.println("1 .. vlozeni nove knihy");
@@ -143,6 +144,7 @@ public class App {
 						System.out.println("knihu nebylo mozno nacist");
 					break;				
 				case 12:
+					knihovna.connect();
 					run=false;
 					break;
 			}
