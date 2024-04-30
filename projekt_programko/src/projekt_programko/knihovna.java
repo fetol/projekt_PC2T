@@ -96,6 +96,8 @@ public class knihovna {
 	            System.out.println("Autor: " + book.getAutor());
 	            System.out.println("Rok vydani: " + book.getRok_vydani());
 	            System.out.println("Typ knihy: "+ book.getTyp());
+	            System.out.println("Zaner: "+ book.getZanr());
+	            System.out.println("Pre triedu: "+ book.getRocniKod());
 	            System.out.println("Pujceno: " + (book.stav_vypujcky() ? "Ano" : "Ne"));
 	            System.out.println();
 		} else {

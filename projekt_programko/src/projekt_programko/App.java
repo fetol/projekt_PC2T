@@ -61,7 +61,7 @@ public class App {
 			System.out.println("3 .. smazani knihy");
 			System.out.println("4 .. oznaceni knihy jako vypujcene/vracene");
 			System.out.println("5 .. vypis knih ");
-			System.out.println("6 .. vyhledani knihy ");
+			System.out.println("6 .. vyhledani knihy podla nazvu ");
 			System.out.println("7 .. vypis vsech knih daneho autora");
 			System.out.println("8 .. vypis vsech knih, ktere patri do konkretneho zanru");
 			System.out.println("9 .. vypis vsech vypujcenych knih s informaciou ci roman alebo ucebnica");
@@ -99,13 +99,27 @@ public class App {
 						System.out.println(nazev + " neni v databazi ");				
 					break;
 				case 4:
-					System.out.println("");
-					
+					System.out.println("Chces vratit alebo vypujcit:");
+			        System.out.println("1.Vratit");
+			        System.out.println("2.Vypujcit");
+			        int Vyber = pouzeCelaCisla(sc);
+					 if ( Vyber == 1) {
+						 System.out.println("Zadejte nazev knihy");
+						 	nazev=sc.next();
+				            knihovna.vraceni(nazev);
+				        } else if (Vyber == 2) {
+				        	System.out.println("Zadejte nazev knihy");
+						 	nazev=sc.next();
+				            knihovna.vypujceni(nazev);	
+				        }
+					break;
 				case 5:
 					 knihovna.listovaniKnih();
 					break;
 				case 6:
-					
+					System.out.println("Zadaj nazov knihy?");
+					nazev=sc.next();
+					knihovna.hledani_knihy(nazev);
 					break;
 				case 7:
 					
