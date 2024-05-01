@@ -142,12 +142,12 @@ public class App {
 					knihovna.ulozitknihudodsouboru(nazev);
 					break;
 				case 11:
-					System.out.println("Zadejte nazev souboru k nacteni");  //nacitanie nejde
-					if (knihovna.nacistknihudodzosouboru(sc.next()))
-						System.out.println("kniha nactena");
+					System.out.println("Zadejte nazev souboru k nacteni");
+					if (knihovna.loadBookFromFile(sc.next()))
+						System.out.println("Databaze nactena");
 					else
-						System.out.println("knihu nebylo mozno nacist");
-					break;				
+						System.out.println("Databazi nebylo mozno nacist");
+					break;			
 				case 12:
 					run=false;
 					break;

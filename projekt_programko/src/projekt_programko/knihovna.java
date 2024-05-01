@@ -1,4 +1,5 @@
 package projekt_programko;
+import java.awt.print.Book;
 import java.io.*;
 import java.util.*;
 import java.io.BufferedReader;
@@ -284,27 +285,45 @@ public class knihovna {
 		
 		
 	}
-	public boolean nacistknihudodzosouboru(String nazev_souboru) {
-		try {
-	        File file = new File(nazev_souboru);
-	        Scanner scanner = new Scanner(file);
-	        while (scanner.hasNextLine()) {
-	            String line = scanner.nextLine();
-	            String[] parts = line.split(",");
-	            if (parts.length == 5) {
-	                String nazevKnihy = parts[0];
-	                String autor = parts[1];
-	                int rokVydani = Integer.parseInt(parts[2]);
-	                String typ = parts[3];
-	                boolean pujceno = Boolean.parseBoolean(parts[4]);
+	public boolean loadBookFromFile(String fileName) {
+	    BufferedReader in = null;
+	    boolean success = true;
+	    try {
+	        in = new BufferedReader(new FileReader(fileName));
+	        String line = in.readLine(); // Přeskočíme hlavičku souboru
+	        line = in.readLine();
+	        while (line != null) {
+	            String[] bookData = line.split(",");
+	            String nazev = bookData[0];
+	            List<String> autor = Arrays.asList(bookData[1].split(","));
+	            int rok_vydani = Integer.parseInt(bookData[2]);
+	            String typ = bookData[3];
+	            boolean stav_vypujcky = bookData[4].equalsIgnoreCase("Yes");
+	            if (typ.equalsIgnoreCase("roman")) {
+	                Zanr zanr = Zanr.valueOf(bookData[5]);
+	                knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, zanr, 0));
+	            } else if (typ.equalsIgnoreCase("ucebnica")) {
+	                int rocniKod = Integer.parseInt(bookData[6]);
+	                knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, null, rocniKod));
 	            }
+	            line = in.readLine();
 	        }
-	        scanner.close();
-	    } catch (FileNotFoundException e) {
-	        e.printStackTrace();
+	    } catch (IOException e) {
+	        System.out.println("Soubor nelze otevřít");
+	        success = false;
+	    } finally {
+	        try {
+	            if (in != null) {
+	                in.close();
+	            }
+	        } catch (IOException e) {
+	            System.out.println("Soubor nelze zavřít");
+	            success = false;
+	        }
 	    }
-		return true;
+	    return success;
 	}
+	
 	public static int pouzeCelaCisla(Scanner sc) 
 	{
 		int cislo = 0;
