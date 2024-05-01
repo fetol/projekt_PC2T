@@ -53,9 +53,10 @@ public class App {
 		String typ;
 		boolean stav_vypujcky;
 		String nazev_souboru;
+		int rocnikod;
 		autor.clear();
 		boolean run=true;
-        DatabaseConnection.nacitatzDB();
+       // DatabaseConnection.nacitatzDB();
 		while(run)
 		
 		{
@@ -150,7 +151,6 @@ public class App {
 					run=false;
 					break;
 			}
-			 DatabaseConnection.ulozitdoDB();
 		}	
 	}
 }
