@@ -50,10 +50,6 @@ public class App {
 		String nazev;
 		List<String> autor=new ArrayList<>();
 		String autor2;
-		int rok_vydani;
-		String typ;
-		boolean stav_vypujcky;
-		String nazev_souboru;
 		autor.clear();
 		Zanr zanr;
 		boolean run=true;
@@ -143,7 +139,7 @@ public class App {
 					break;
 				case 11:
 					System.out.println("Zadejte nazev souboru k nacteni");
-					if (knihovna.loadBookFromFile(sc.next()))
+					if (knihovna.nahrajzSouboru(sc.next()))
 						System.out.println("Kniha nactena");
 					else
 						System.out.println("Knihu nebolo mozno nacist");

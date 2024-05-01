@@ -285,7 +285,7 @@ public class knihovna {
 		
 		
 	}
-	public boolean loadBookFromFile(String fileName) {
+	public boolean nahrajzSouboru(String fileName) {
 	    BufferedReader in = null;
 	    boolean success = true;
 	    try {
