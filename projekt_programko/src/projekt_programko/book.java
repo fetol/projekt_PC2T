@@ -65,10 +65,8 @@ public class book {
 	public void setRocniKod(int rocniKod) {
 		this.rocniKod = rocniKod;
 	}
-	public void set_stav_vypujcky(boolean pujceno) {
-		if(!pujceno) {
-			this.stav_vypujcky = pujceno;
-		}
+	public void set_stav_vypujcky(boolean stav) {
+	    this.stav_vypujcky = stav;
 	}
 	public  String getTyp() {
 	        return typ;

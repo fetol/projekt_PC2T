@@ -74,7 +74,8 @@ public class knihovna {
 	            System.out.println("Autor: " + String.join(", ", book.getAutor()));
 	            System.out.println("Rok vydani: " + book.getRok_vydani());
 	            System.out.println("Pujceno: " + (book.stav_vypujcky() ? "Ano" : "Ne"));
-
+	            
+	            scanner.nextLine();
 	            // Prompt user for changes
 	            System.out.println("Chces aktualizovat autora? (Y/N)");
 	            String updateAutor = scanner.nextLine().trim();
@@ -93,7 +94,6 @@ public class knihovna {
 	                book.setRok_vydani(newRokVydani);
 	            }
 
-	            scanner.nextLine();
 	            
 	            System.out.println("Chces aktualizovat stav vypujcky? (Y/N)");
 	            String updateStavVypujcky = scanner.nextLine().trim();
@@ -126,6 +126,7 @@ public class knihovna {
 	            System.out.println("Pre triedu: "+ book.getRocniKod());
 	            System.out.println("Pujceno: " + (book.stav_vypujcky() ? "Ano" : "Ne"));
 	            System.out.println();
+	            System.out.println();
 	        }
 		 
 	  }
@@ -149,7 +150,7 @@ public class knihovna {
 	
 	public void podleAutora(String autor) {
 		boolean found = false;
-		for(book book : knihovna.values()) {
+		for(book book : knihovna.values()) {	
 			if (book.getAutor().contains(autor)) {
 				System.out.println("Nazev: " + book.getNazev());
 				System.out.println("Rok vydani: " + book.getRok_vydani());
@@ -229,19 +230,24 @@ public class knihovna {
 			 }
 	 	}
 	public void vraceni(String nazev) {
-		book book = knihovna.get(nazev);
-		 if (book !=null) {
-			 if(!book.stav_vypujcky()) {
-				 book.set_stav_vypujcky(false);
-				 System.out.println("Kniha " + nazev + " byla vracena");
-			 } else {
-				 System.out.println("Kniha " + nazev + " jiz byla vracena!");
-			 } 
-			 } else {
-				 System.out.println("Kniha " + nazev + " Nebyla nalezena");
-				 
-			 }
+	    // Check if the book exists in the library
+	    book book = knihovna.get(nazev); // Assuming 'Book' is the class name
+	    if (book != null) {
+	        // Check if the book is currently borrowed
+	        if (book.stav_vypujcky()==true) {
+	            // If the book is not borrowed, mark it as returned
+	            book.set_stav_vypujcky(false);
+	            System.out.println("Kniha " + nazev + " byla vracena");
+	        } else {
+	            // If the book is already returned, inform the user
+	            System.out.println("Kniha " + nazev + " jiz byla vracena!");
+	        }
+	    } else {
+	        // If the book is not found in the library, inform the user
+	        System.out.println("Kniha " + nazev + " nebyla nalezena");
+	    }
 	}
+	 
 	public void razeniKnihyPodleAutoraChronologicky(String autor) {
 		List<book> knizkypodleautora = new ArrayList<>();
 		
