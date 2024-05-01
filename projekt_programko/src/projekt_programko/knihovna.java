@@ -62,14 +62,48 @@ public class knihovna {
 	        }
 	    }
 	
-	public void updateKnihy (String nazev, String autor, int rok_vydani, boolean stav_vypujcky) {
-		book book = knihovna.get(nazev);
-		if (book != null) {
-			book.getAutor().add(autor);
-			book.setRok_vydani(rok_vydani);
-			book.set_stav_vypujcky(stav_vypujcky);
-		}
-	}
+	 public void updateKnihy(String nazev, Scanner scanner) {
+	        book book = knihovna.get(nazev);
+	        if (book != null) {
+	            System.out.println("Aktualne udaje o knihe:");
+	            System.out.println("Nazev: " + book.getNazev());
+	            System.out.println("Autor: " + String.join(", ", book.getAutor()));
+	            System.out.println("Rok vydani: " + book.getRok_vydani());
+	            System.out.println("Pujceno: " + (book.stav_vypujcky() ? "Ano" : "Ne"));
+
+	            // Prompt user for changes
+	            System.out.println("Chces aktualizovat autora? (Y/N)");
+	            String updateAutor = scanner.nextLine().trim();
+	            if (updateAutor.equalsIgnoreCase("Y")) {
+	                System.out.println("Zadaj noveho autora: ");
+	                String newAutor = scanner.nextLine();
+	                book.getAutor().clear();
+	                book.getAutor().add(newAutor);
+	            }
+	            
+	            System.out.println("Chces aktualizovat rok vydani? (Y/N)");
+	            String updateRokVydani = scanner.nextLine().trim();
+	            if (updateRokVydani.equalsIgnoreCase("Y")) {
+	                System.out.println("Zadaj novy rok vydani: ");
+	                int newRokVydani = Integer.parseInt(scanner.nextLine().trim());
+	                book.setRok_vydani(newRokVydani);
+	            }
+
+	            scanner.nextLine();
+	            
+	            System.out.println("Chces aktualizovat stav vypujcky? (Y/N)");
+	            String updateStavVypujcky = scanner.nextLine().trim();
+	            if (updateStavVypujcky.equalsIgnoreCase("Y")) {
+	                System.out.println("Je tato kniha aktualne vypujcena? (Y/N)");
+	                boolean newStavVypujcky = scanner.nextLine().trim().equalsIgnoreCase("Y");
+	                book.set_stav_vypujcky(newStavVypujcky);
+	            }
+
+	            System.out.println("Kniha aktualizovana.");
+	        } else {
+	            System.out.println("Kniha nenajdena.");
+	        }
+	    }
 		
 	public boolean smazaniknihy(String nazev) {
 		if (knihovna.remove(nazev)!=null)
@@ -284,16 +318,14 @@ public class knihovna {
 		}
 		return cislo;
 	}
-		private static final String DB_URL = "mysql.fetol-dev.svc.cluster.local";
-	    private static final String DB_USER = "fetol";
-	    private static final String DB_PASSWORD = "oldajefrajer";
-
 
 	    public void connect() {
 	            System.out.println("Connected to the database.");
 	       
 	        }
 	
+	    
+	   
 }
 	
 

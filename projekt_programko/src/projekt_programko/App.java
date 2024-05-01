@@ -1,10 +1,12 @@
 package projekt_programko;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class App {
+
 	
 	public static int pouzeCelaCisla(Scanner sc) 
 	{
@@ -53,7 +55,7 @@ public class App {
 		String nazev_souboru;
 		autor.clear();
 		boolean run=true;
-		knihovna.connect();
+        DatabaseConnection.nacitatzDB();
 		while(run)
 		
 		{
@@ -78,19 +80,9 @@ public class App {
 					knihovna.addKnihu(sc);
 					break;
 				case 2:
-					System.out.println("Zadejte nazov,autora,rok_vydania,typ_knihy,stav_vypujcky"); //prerobit 
+					System.out.println("Zadejte nazev knihy k editovaniu");
 					nazev=sc.next();
-	                autor2=sc.next();
-					rok_vydani=App.pouzeCelaCisla(sc);
-					typ=sc.next();
-					System.out.println(" Pozicana/vracena (true or false): ");
-				    stav_vypujcky = sc.hasNextBoolean();
-				    if (stav_vypujcky) {
-				        stav_vypujcky = sc.nextBoolean();
-				    } else {
-				        System.out.println("Zla hodnota daj normalnu nabuduce.");
-				    }
-				    knihovna.updateKnihy(nazev,autor2,rok_vydani,stav_vypujcky);
+				    knihovna.updateKnihy(nazev, sc);
 				    break;
 				case 3:
 					System.out.println("Zadejte nazev knihy k odstraneni");
@@ -158,7 +150,7 @@ public class App {
 					run=false;
 					break;
 			}
-			
-		}
+			 DatabaseConnection.ulozitdoDB();
+		}	
 	}
 }

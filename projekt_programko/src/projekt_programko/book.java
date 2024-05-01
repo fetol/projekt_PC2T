@@ -6,7 +6,8 @@ enum Zanr {
     FANTAZIE,
     ROMANTIKA,
     VOJNA,
-    THRILLER
+    THRILLER;
+
 }
 
 public class book {
@@ -17,6 +18,9 @@ public class book {
 	private String typ;
 	private Zanr zanr;
 	private int rocniKod;
+	public boolean set_stav_vypujcky;
+	public String setTyp;
+	public Zanr setZanr;
 
 	    
 	public book (String nazev, List <String> autor, int rok_vydani, String typ ,Zanr zanr,int rocniKod) {
@@ -66,11 +70,11 @@ public class book {
 			this.stav_vypujcky = pujceno;
 		}
 	}
-		public String getTyp() {
+	public  String getTyp() {
 	        return typ;
 	    }
 
-	    public void setType(String typ) {
+	public void setTyp(String typ) {
 	        this.typ = typ;
 	        }
 }
