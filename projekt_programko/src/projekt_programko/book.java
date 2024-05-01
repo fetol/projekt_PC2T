@@ -2,7 +2,7 @@ package projekt_programko;
 import java.util.List;
 
 enum Zanr {
-    BELETRIE,
+	Historický,
     FANTAZIE,
     ROMANTIKA,
     VOJNA,

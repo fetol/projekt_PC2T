@@ -53,6 +53,7 @@ public class App {
 		String nazev_souboru;
 		autor.clear();
 		boolean run=true;
+		knihovna.connect();
 		while(run)
 		
 		{
@@ -77,7 +78,7 @@ public class App {
 					knihovna.addKnihu(sc);
 					break;
 				case 2:
-					System.out.println("Zadejte nazov,autora,rok_vydania,typ_knihy,stav_vypujcky"); //chybne
+					System.out.println("Zadejte nazov,autora,rok_vydania,typ_knihy,stav_vypujcky"); //prerobit 
 					nazev=sc.next();
 	                autor2=sc.next();
 					rok_vydani=App.pouzeCelaCisla(sc);
@@ -87,7 +88,7 @@ public class App {
 				    if (stav_vypujcky) {
 				        stav_vypujcky = sc.nextBoolean();
 				    } else {
-				        System.out.println("Invalid input. Please enter a valid boolean value.");
+				        System.out.println("Zla hodnota daj normalnu nabuduce.");
 				    }
 				    knihovna.updateKnihy(nazev,autor2,rok_vydani,stav_vypujcky);
 				    break;
@@ -123,13 +124,23 @@ public class App {
 					knihovna.hledani_knihy(nazev);
 					break;
 				case 7:
-					
+					System.out.println("Zadaj nazov autora?");
+					autor2=sc.next();
+					knihovna.razeniKnihyPodleAutoraChronologicky(autor2);
 					break;
 				case 8:
-					
+					System.out.println("Vyber si zaner:");
+		            System.out.println("1. Historický");
+		            System.out.println("2. Fantazie");
+		            System.out.println("3. ROMANTIKA");
+		            System.out.println("4. VOJNA");
+		            System.out.println("5. THRILLER");
+		            int zanerChoice = pouzeCelaCisla(sc);
+		            Zanr zanr = Zanr.values()[zanerChoice - 1];
+		            knihovna.podlezanru(zanr);
 					break;
 				case 9:
-	
+					knihovna.listovaniPujcenychKnih(); //nejde lebo nejde pujcovanie
 					break;
 				case 10:
 					System.out.println("Zadejte nazev knihy k ulozeni");
@@ -137,14 +148,13 @@ public class App {
 					knihovna.ulozitknihudodsouboru(nazev);
 					break;
 				case 11:
-					System.out.println("Zadejte nazev souboru k nacteni");
+					System.out.println("Zadejte nazev souboru k nacteni");  //nacitanie nejde
 					if (knihovna.nacistknihudodzosouboru(sc.next()))
 						System.out.println("kniha nactena");
 					else
 						System.out.println("knihu nebylo mozno nacist");
 					break;				
 				case 12:
-					knihovna.connect();
 					run=false;
 					break;
 			}

@@ -47,13 +47,13 @@ public class knihovna {
 	        } else if (bookVyber == 2) {
 	            System.out.println("Vyber si zaner:");
 	            System.out.println("1. Historický");
-	            System.out.println("2. Fantasy");
-	            System.out.println("3. Romantický");
-	            System.out.println("4. Vojna");
-	            System.out.println("5. Thriller");
-	            int genreChoice = pouzeCelaCisla(scanner);
-	            Zanr zanr = Zanr.values()[genreChoice - 1];
-	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, "novela", zanr, 0));
+	            System.out.println("2. Fantazie");
+	            System.out.println("3. ROMANTIKA");
+	            System.out.println("4. VOJNA");
+	            System.out.println("5. THRILLER");
+	            int zanerChoice = pouzeCelaCisla(scanner);
+	            Zanr zanr = Zanr.values()[zanerChoice - 1];
+	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, "roman", zanr, 0));
 	            System.out.println("Roman pridany do kniznice: " + nazev);
 	            System.out.println("Typ: Roman");
 	            System.out.println("Zaner: " + zanr);
@@ -132,7 +132,8 @@ public class knihovna {
 				 	System.out.println("Nazev: " + book.getNazev());
 	                System.out.println("Rok vydani: " + book.getRok_vydani());
 	                System.out.println("Typ knihy: "+ book.getTyp());
-	                
+	                System.out.println("Zaner: "+ book.getZanr());
+		            System.out.println("Pre triedu: "+ book.getRocniKod());
 	                System.out.println();
 	                found = true;	
 			}
@@ -158,13 +159,14 @@ public class knihovna {
 		}
 	}
 	
-	public void podlezanru(String zanr) {
+	public void podlezanru(Zanr zanr) {
 		boolean found = false;
 		for (book book : knihovna.values()) {
 			if (book.getZanr().equals(zanr)) {
 	               System.out.println("Nazev: " + book.getNazev());
 	              System.out.println("Rok vydani: " + book.getRok_vydani());
-	              System.out.println("Typ: " + (book.getTyp().equals("ucebnice") ? "Ucebnice" : "novela"));
+	              System.out.println("Typ: " + book.getTyp());
+	              System.out.println("Zaner: "+ book.getZanr());
 	              System.out.println();
 	               found = true;
 	             }
@@ -216,7 +218,7 @@ public class knihovna {
 				System.out.println("Knihy podle autora " + autor + " (chronologicky)");
 				for (book book : knizkypodleautora) {
 					System.out.println("Nazev: "+ book.getNazev());
-					System.out.println("Rok vydaní" + book.getRok_vydani());
+					System.out.println("Rok vydaní: " + book.getRok_vydani());
 					System.out.println();
 				}
 			} else {
