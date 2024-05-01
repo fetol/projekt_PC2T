@@ -144,9 +144,9 @@ public class App {
 				case 11:
 					System.out.println("Zadejte nazev souboru k nacteni");
 					if (knihovna.loadBookFromFile(sc.next()))
-						System.out.println("Databaze nactena");
+						System.out.println("Kniha nactena");
 					else
-						System.out.println("Databazi nebylo mozno nacist");
+						System.out.println("Knihu nebolo mozno nacist");
 					break;			
 				case 12:
 					run=false;
