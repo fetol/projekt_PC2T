@@ -35,13 +35,13 @@ public class DatabaseConnection {
 		        return conn;
 		    }	   
 
-			    	public static void nacitatzDB(String nazev, List <String> autor, int rok_vydani, String typ ,Zanr zanr,int rocniKod) {
+			    	public static void nacitatzDB() {
 			        try {
 			            Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			            Statement stmt = conn.createStatement();
 			            ResultSet rs = stmt.executeQuery("SELECT * FROM tabulka");
 			            while (rs.next()) {
-			                book book = new book(); 
+			                book book = new book(nazev, autor, rok_vydani, typ, zanr, rocniKod); 
 	
 			                book.setNazev(rs.getString("nazev"));
 	
@@ -55,9 +55,9 @@ public class DatabaseConnection {
 			                String zanr = rs.getString("zanr");
 			                book.setZaner(Zanr.valueOf(zanr));
 	
-			                int rocniKod = rs.getInt("rocniKod");
+			                int rocniKod1 = rs.getInt("rocniKod");
 			                if (!rs.wasNull()) {
-			                    book.setRocniKod(rocniKod);
+			                    book.setRocniKod(rocniKod1);
 			                }
 	
 			                // Optionally, you can do something with the loaded book object, like adding it to a collection
