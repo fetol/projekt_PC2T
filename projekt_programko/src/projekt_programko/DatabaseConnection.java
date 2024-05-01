@@ -10,8 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class DatabaseConnection {
-		
+			
 
 			private static final String URL = "jdbc:mysql://sql11.freesqldatabase.com:3306/sql11703245";
 		    private static final String USER = "sql11703245";
@@ -20,6 +21,11 @@ public class DatabaseConnection {
 		    public static Connection getConnection() {
 		        Connection conn = null;
 		        try {
+		        	try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					}
 		            conn = DriverManager.getConnection(URL, USER, PASSWORD);
 		            System.out.println("Připojení k databázi bylo úspěšné.");
 		        } catch (SQLException e) {
@@ -33,9 +39,9 @@ public static void nacitatzDB() {
     try {
         Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM sql11703245");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM tabulka");
         while(rs.next()){
-        	book book = new book(null, null, 0, null, null, 0);
+        	book book = new book();
         	book.setNazev(rs.getString("nazev"));
         	String autori = rs.getString("autor");
         	book.setAutor(Arrays.asList(autori.split(",")));
@@ -56,9 +62,9 @@ public static void nacitatzDB() {
 public static void ulozitdoDB() {
     try {
         Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        String sql = "INSERT INTO  sql11703245 (nazev, autor, rok_vydani, stav_vypujcky, typ, zanr, rocniKod) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO  tabulka (nazev, autor, rok_vydani, stav_vypujcky, typ, zanr, rocniKod) VALUES (?, ?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        book book = new book(sql, null, 0, sql, null, 0);
+        book book = new book();
         pstmt.setString(1, book.getNazev());
         pstmt.setString(2, String.join(",", book.getAutor())); 
         pstmt.setInt(3, book.getRok_vydani());
