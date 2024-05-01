@@ -38,13 +38,16 @@ public class knihovna {
 	        int rok_vydani = pouzeCelaCisla(scanner);
 
 	        if (bookVyber == 1) {
+	        	String typ="ucebnica";
 	            System.out.println("Zadaj pre aku triedu to je: ");
 	            int rocniKod = pouzeCelaCisla(scanner);
-	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, "ucebnice", null, rocniKod));
+	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, null, rocniKod));
+	            DatabaseConnection.ulozitdoDB(nazev, autor, rok_vydani,typ, null, rocniKod);
 	            System.out.println("Ucebnica pridana do kniznice: " + nazev);
 	            System.out.println("Typ: Ucebnica");
 	            System.out.println("Trieda cislo: " + rocniKod);
 	        } else if (bookVyber == 2) {
+	        	String typ="roman";
 	            System.out.println("Vyber si zaner:");
 	            System.out.println("1. Historický");
 	            System.out.println("2. Fantazie");
@@ -53,13 +56,15 @@ public class knihovna {
 	            System.out.println("5. THRILLER");
 	            int zanerChoice = pouzeCelaCisla(scanner);
 	            Zanr zanr = Zanr.values()[zanerChoice - 1];
-	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, "roman", zanr, 0));
+	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, zanr, 0));
+	            DatabaseConnection.ulozitdoDB(nazev, autor, rok_vydani,typ, zanr, 0);
 	            System.out.println("Roman pridany do kniznice: " + nazev);
 	            System.out.println("Typ: Roman");
 	            System.out.println("Zaner: " + zanr);
 	        } else {
 	            System.out.println("Zly input.Kniha neni pridana do kniznice.");
 	        }
+			
 	    }
 	
 	 public void updateKnihy(String nazev, Scanner scanner) {
@@ -319,11 +324,7 @@ public class knihovna {
 		return cislo;
 	}
 
-	    public void connect() {
-	            System.out.println("Connected to the database.");
-	       
-	        }
-	
+
 	    
 	   
 }

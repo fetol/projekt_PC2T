@@ -78,6 +78,7 @@ public class App {
 			{
 				case 1:
 					knihovna.addKnihu(sc);
+					DatabaseConnection.ulozitdoDB(nazev, autor, rok_vydani, typ, zanr, );
 					break;
 				case 2:
 					System.out.println("Zadejte nazev knihy k editovaniu");
