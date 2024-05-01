@@ -32,7 +32,7 @@ public class book {
 		this.zanr = zanr;
 		this.rocniKod = rocniKod;
 	}
-	public String getNazev() {
+	public  String getNazev() {
 		return nazev;
 	}
 	public Zanr getZanr() {

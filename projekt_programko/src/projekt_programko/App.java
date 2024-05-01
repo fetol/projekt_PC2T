@@ -43,6 +43,7 @@ public class App {
 	}
 
 	public static void main(String[] args) {
+
 		
 		knihovna knihovna = new knihovna();
 		Scanner sc=new Scanner(System.in);
@@ -54,6 +55,7 @@ public class App {
 		boolean stav_vypujcky;
 		String nazev_souboru;
 		autor.clear();
+		Zanr zanr;
 		boolean run=true;
         //DatabaseConnection.nacitatzDB();
 		while(run)
@@ -128,7 +130,7 @@ public class App {
 		            System.out.println("4. VOJNA");
 		            System.out.println("5. THRILLER");
 		            int zanerChoice = pouzeCelaCisla(sc);
-		            Zanr zanr = Zanr.values()[zanerChoice - 1];
+		            zanr = Zanr.values()[zanerChoice - 1];
 		            knihovna.podlezanru(zanr);
 					break;
 				case 9:
@@ -150,7 +152,8 @@ public class App {
 					run=false;
 					break;
 			}
-			// DatabaseConnection.ulozitdoDB();
-		}	
+			  Runtime.getRuntime().addShutdownHook(new Thread(() ->DatabaseConnection.ulozitdoDB()));
+	    }
+	
 	}
 }
