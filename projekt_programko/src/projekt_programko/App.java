@@ -152,7 +152,6 @@ public class App {
 					run=false;
 					break;
 			}
-			  Runtime.getRuntime().addShutdownHook(new Thread(() ->DatabaseConnection.ulozitdoDB()));
 	    }
 	
 	}
