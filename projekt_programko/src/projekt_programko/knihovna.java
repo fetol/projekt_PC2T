@@ -42,7 +42,6 @@ public class knihovna {
 	            System.out.println("Zadaj pre aku triedu to je: ");
 	            int rocniKod = pouzeCelaCisla(scanner);
 	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, null, rocniKod));
-	            DatabaseConnection.ulozitdoDB(nazev, autor, rok_vydani,typ, null, rocniKod);
 	            System.out.println("Ucebnica pridana do kniznice: " + nazev);
 	            System.out.println("Typ: Ucebnica");
 	            System.out.println("Trieda cislo: " + rocniKod);
@@ -57,7 +56,6 @@ public class knihovna {
 	            int zanerChoice = pouzeCelaCisla(scanner);
 	            Zanr zanr = Zanr.values()[zanerChoice - 1];
 	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, zanr, 0));
-	            DatabaseConnection.ulozitdoDB(nazev, autor, rok_vydani,typ, zanr, 0);
 	            System.out.println("Roman pridany do kniznice: " + nazev);
 	            System.out.println("Typ: Roman");
 	            System.out.println("Zaner: " + zanr);
