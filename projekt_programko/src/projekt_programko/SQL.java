@@ -57,7 +57,7 @@ public class SQL {
     	        Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
     	        String sql = "INSERT INTO  tabulka (nazev, autor, rok_vydani, stav_vypujcky, typ, zanr, rocniKod) VALUES (?, ?, ?)";
     	        PreparedStatement pstmt = conn.prepareStatement(sql);
-    	        book book = new book(); //chyba tu nevim co
+    	        book book = new book(); //chyba tu nevim co ahhhhoj
     	        pstmt.setString(1, book.getNazev());
     	        pstmt.setString(2, String.join(",", book.getAutor())); 
     	        pstmt.setInt(3, book.getRok_vydani());
