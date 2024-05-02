@@ -1,12 +1,15 @@
 package projekt_programko;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class SQL {
 
@@ -29,48 +32,63 @@ public class SQL {
         	        }
         	        return con;
             }
-     public static void nacitatzDB() {
-    	 try {
-    		Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-    		Statement stmt = conn.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT * FROM tabulka");
-    		while(rs.next()){
-    		book book = new book(); //chyba tu nevim co
-         	book.setNazev(rs.getString("nazev"));
-         	String autori = rs.getString("autor");
-         	book.setAutor(Arrays.asList(autori.split(",")));
-            book.setRok_vydani(rs.getInt("rok_vydani"));
-            book.set_stav_vypujcky = rs.getBoolean("stav_vypujcky");
-            book.setTyp = rs.getString("typ");
-            String zanr = rs.getString("zanr");
-            book.setZaner(Zanr.valueOf(zanr));
-            book.setRocniKod(rs.getInt("rocniKod"));
+     public static HashMap<String, book> load(String tabulka) {
+         HashMap<String, book> knihovna = new HashMap<>();
+         String sql = "SELECT * FROM " + tabulka;
+         try (Connection con = connect();
+              Statement stmt = con.createStatement();
+              ResultSet rs = stmt.executeQuery(sql)) {-
+             while (rs.next()) {
+                 String nazev = rs.getString("nazev");
+                 List<String> autor = Arrays.asList(rs.getString("autor").split(", "));
+                 int rok_vydani = rs.getInt("rok_vydani");
+                 String typ = rs.getString("typ");
+                 Zanr zanr = Zanr.valueOf(rs.getString("zanr"));
+                 int rocniKod = rs.getInt("rocniKod");
+                 Boolean stav_vypujcky = rs.getBoolean("stav_vypujcky");
+                 book book = new book(nazev, autor, rok_vydani, typ, zanr, rocniKod, stav_vypujcky);
+                 knihovna.put(nazev, book);
+             }
+         } catch (SQLException e) {
+             e.printStackTrace();
          }
-         rs.close();
-         stmt.close();
-     } catch (SQLException e) {
-         e.printStackTrace();
+         return knihovna;
      }
- }
-     public static void ulozitdoDB() {
-    	    try {
-    	        Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-    	        String sql = "INSERT INTO  tabulka (nazev, autor, rok_vydani, stav_vypujcky, typ, zanr, rocniKod) VALUES (?, ?, ?)";
-    	        PreparedStatement pstmt = conn.prepareStatement(sql);
-    	       knihovna. = new book(); //chyba tu nevim co ahhhhoj
-    	        pstmt.setString(1, book.getNazev());
-    	        pstmt.setString(2, String.join(",", book.getAutor())); 
-    	        pstmt.setInt(3, book.getRok_vydani());
-    	        pstmt.setBoolean(4, book.stav_vypujcky());
-    	        pstmt.setString(5, book.getTyp());
-    	        pstmt.setString(6, book.getZanr().name());
-    	        pstmt.setInt(7, book.getRocniKod());
-    	        pstmt.executeUpdate();
-    	        pstmt.close();
-    	        conn.close();
-    	    } catch (SQLException e) {
-    	        e.printStackTrace();
-    	    }
-     }
+        
+     
+    public static void Upload(book book) throws SQLException {
+    	String sql = "INSERT INTO " + "tabulka" + " (nazev, autor, rok_vydani, typ, zanr, rocniKod, stav_vypujcky) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    	Connection con = null;
+    	
+    	con = DriverManager.getConnection(URL, USER, PASSWORD);
+    	
+    	PreparedStatement pstmt = con.prepareStatement(sql);
+    		 pstmt.setString(1, book.getNazev());
+             pstmt.setString(2, String.join(", ", book.getAutor()));
+             pstmt.setInt(3, book.getRok_vydani());
+             pstmt.setString(4, book.getTyp());
+             pstmt.setString(5, book.getZanr().toString());
+             pstmt.setInt(6, book.getRocniKod());
+             pstmt.setBoolean(7, book.getStav_vypujcky());
+             pstmt.executeUpdate();
+    }
+    public static void Update(book book) throws SQLException {
+    	String sql =
+    	"UPDATE " + "tabulka" + 
+        " SET nazev = ?, autor = ?, rok_vydani = ?, stav_vypujcky = ?" +
+        " WHERE nazev = ?";
+    	Connection con = null;
+    	
+    	con = DriverManager.getConnection(URL, USER, PASSWORD);
+    	
+    	PreparedStatement pstmt = con.prepareStatement(sql);
+    		 pstmt.setString(1, book.getNazev());
+             pstmt.setString(2, String.join(", ", book.getAutor()));
+             pstmt.setInt(3, book.getRok_vydani());
+             pstmt.setString(5, book.getNazev());
+             pstmt.setBoolean(4, book.getStav_vypujcky());
+             pstmt.executeUpdate();
+    }
+	
 }
 	

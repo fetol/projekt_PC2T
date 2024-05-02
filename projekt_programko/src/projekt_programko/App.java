@@ -1,6 +1,7 @@
 package projekt_programko;
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -42,21 +43,24 @@ public class App {
 		return cislo;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 
 		
 		knihovna knihovna = new knihovna();
 		Scanner sc=new Scanner(System.in);
-		String nazev;
+		String nazev = null;
 		List<String> autor=new ArrayList<>();
 		String autor2;
 		autor.clear();
 		Zanr zanr;
 		SQL.connect();
+		String tabulka = "tabulka";
+		SQL.load(tabulka);
 		boolean run=true;
 		while(run)
 		
 		{
+			
 			System.out.println("Vyberte pozadovanou cinnost:");
 			System.out.println("1 .. vlozeni nove knihy");
 			System.out.println("2 .. uprava knihy");
@@ -76,6 +80,8 @@ public class App {
 			{
 				case 1:
 					knihovna.addKnihu(sc);
+					
+					
 					break;
 				case 2:
 					System.out.println("Zadejte nazev knihy k editovaniu");
@@ -107,6 +113,7 @@ public class App {
 					break;
 				case 5:
 					 knihovna.listovaniKnih();
+					 
 					break;
 				case 6:
 					System.out.println("Zadaj nazov knihy?");
@@ -147,6 +154,7 @@ public class App {
 				case 12:
 					run=false;
 					break;
+				
 			}
 	    }
 	

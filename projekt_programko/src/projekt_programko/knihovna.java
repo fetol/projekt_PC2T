@@ -17,7 +17,7 @@ public class knihovna {
 		this.knihovna = new HashMap<>();
 	}
 	
-	 public void addKnihu(Scanner scanner) {
+	 public void addKnihu(Scanner scanner) throws SQLException {
 	        System.out.println("Aky typ knihy:");
 	        System.out.println("1.Ucebnica");
 	        System.out.println("2.Romany");
@@ -42,8 +42,11 @@ public class knihovna {
 	        	String typ="ucebnica";
 	            System.out.println("Zadaj pre aku triedu to je: ");
 	            int rocniKod = pouzeCelaCisla(scanner);
-	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, null, rocniKod));
+	            int zanerChoice = 6;
+	            Zanr zanr = Zanr.values()[zanerChoice - 1];
+	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, zanr, rocniKod, false));
 	            System.out.println("Ucebnica pridana do kniznice: " + nazev);
+	            
 	            System.out.println("Typ: Ucebnica");
 	            System.out.println("Trieda cislo: " + rocniKod);
 	        } else if (bookVyber == 2) {
@@ -55,25 +58,27 @@ public class knihovna {
 	            System.out.println("4. VOJNA");
 	            System.out.println("5. THRILLER");
 	            int zanerChoice = pouzeCelaCisla(scanner);
-	            Zanr zanr = Zanr.values()[zanerChoice - 1];
-	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, zanr, 0));
+	           Zanr zanr = Zanr.values()[zanerChoice - 1]; 
+	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, zanr, 0, false));
 	            System.out.println("Roman pridany do kniznice: " + nazev);
 	            System.out.println("Typ: Roman");
 	            System.out.println("Zaner: " + zanr);
 	        } else {
 	            System.out.println("Zly input.Kniha neni pridana do kniznice.");
 	        }
+	        book book = datakniha(nazev);
 			
+			SQL.Upload(book);
 	    }
 	
-	 public void updateKnihy(String nazev, Scanner scanner) {
+	 public void updateKnihy(String nazev, Scanner scanner) throws SQLException {
 	        book book = knihovna.get(nazev);
 	        if (book != null) {
 	            System.out.println("Aktualne udaje o knihe:");
 	            System.out.println("Nazev: " + book.getNazev());
 	            System.out.println("Autor: " + String.join(", ", book.getAutor()));
 	            System.out.println("Rok vydani: " + book.getRok_vydani());
-	            System.out.println("Pujceno: " + (book.stav_vypujcky() ? "Ano" : "Ne"));
+	            System.out.println("Pujceno: " + (book.getStav_vypujcky() ? "Ano" : "Ne"));
 	            
 	            scanner.nextLine();
 	            // Prompt user for changes
@@ -100,13 +105,14 @@ public class knihovna {
 	            if (updateStavVypujcky.equalsIgnoreCase("Y")) {
 	                System.out.println("Je tato kniha aktualne vypujcena? (Y/N)");
 	                boolean newStavVypujcky = scanner.nextLine().trim().equalsIgnoreCase("Y");
-	                book.set_stav_vypujcky(newStavVypujcky);
+	                book.setStav_vypujcky(newStavVypujcky);
 	            }
 
 	            System.out.println("Kniha aktualizovana.");
 	        } else {
 	            System.out.println("Kniha nenajdena.");
 	        }
+	        SQL.Update(book);
 	    }
 		
 	public boolean smazaniknihy(String nazev) {
@@ -124,13 +130,22 @@ public class knihovna {
 	            System.out.println("Typ knihy: "+ book.getTyp());
 	            System.out.println("Zaner: "+ book.getZanr());
 	            System.out.println("Pre triedu: "+ book.getRocniKod());
-	            System.out.println("Pujceno: " + (book.stav_vypujcky() ? "Ano" : "Ne"));
+	            System.out.println("Pujceno: " + (book.getStav_vypujcky() ? "Ano" : "Ne"));
 	            System.out.println();
 	            System.out.println();
 	        }
 		 
 	  }
-	
+	public book datakniha(String nazev) {
+		
+		for (book book : knihovna.values()) {
+            if(book.getNazev() == nazev) {
+            	return book;
+            }
+        }
+		
+		return null;
+	}
 	
 	public void hledani_knihy(String nazev) {
 		book book = knihovna.get(nazev);
@@ -141,7 +156,7 @@ public class knihovna {
 	            System.out.println("Typ knihy: "+ book.getTyp());
 	            System.out.println("Zaner: "+ book.getZanr());
 	            System.out.println("Pre triedu: "+ book.getRocniKod());
-	            System.out.println("Pujceno: " + (book.stav_vypujcky() ? "Ano" : "Ne"));
+	            System.out.println("Pujceno: " + (book.getStav_vypujcky() ? "Ano" : "Ne"));
 	            System.out.println();
 		} else {
 			System.out.println("Kniha nebyla nalezena");
@@ -167,7 +182,7 @@ public class knihovna {
 	public void listovaniPujcenychKnih() {
 		boolean found = false;
 		for (book book : knihovna.values()) {
-			if(book.stav_vypujcky()) {
+			if(book.getStav_vypujcky()) {
 				 	System.out.println("Nazev: " + book.getNazev());
 	                System.out.println("Rok vydani: " + book.getRok_vydani());
 	                System.out.println("Typ knihy: "+ book.getTyp());
@@ -185,7 +200,7 @@ public class knihovna {
 		if (book != null) {
 			try(PrintWriter writer = new PrintWriter(new FileWriter(nazev + ".txt"))){
 				writer.println("Nazev,Autor,Rok vydani Typ ,pujceno, zanr, rocnik id");
-                writer.println(book.getNazev() + "," + String.join(", ", book.getAutor()) + "," + book.getRok_vydani() + ","+ (book.getTyp()) + "," +(book.stav_vypujcky() ? "Yes"+ "," : "No" + "," +(book.getZanr()+"," + (book.getRocniKod()))));
+                writer.println(book.getNazev() + "," + String.join(", ", book.getAutor()) + "," + book.getRok_vydani() + ","+ (book.getTyp()) + "," +(book.getStav_vypujcky() ? "Yes"+ "," : "No" + "," +(book.getZanr()+"," + (book.getRocniKod()))));
                 System.out.println("Kniha byla ulozena do souboru: " + nazev + ".txt");
 				
 			} catch (IOException e) {
@@ -216,8 +231,8 @@ public class knihovna {
 	public void vypujceni(String nazev) {
 		book book = knihovna.get(nazev);
 		 if (book !=null) {
-			 if(!book.stav_vypujcky()) {
-				 book.set_stav_vypujcky(true);
+			 if(!book.getStav_vypujcky()) {
+				 book.setStav_vypujcky(true);
 				 System.out.println("Kniha " + nazev + " byla vypujcena");
 			 } else {
 				 System.out.println("Kniha " + nazev + " jiz byla vypujcena!");
@@ -230,8 +245,8 @@ public class knihovna {
 	public void vraceni(String nazev) {
 	    book book = knihovna.get(nazev);
 	    if (book != null) {
-	        if (book.stav_vypujcky()==true) {
-	        	book.set_stav_vypujcky(false);
+	        if (book.getStav_vypujcky()==true) {
+	        	book.setStav_vypujcky(false);
 	            System.out.println("Kniha " + nazev + " byla vracena");
 	        } else {
 	            System.out.println("Kniha " + nazev + " jiz byla vracena!");
@@ -275,7 +290,7 @@ public class knihovna {
 	            System.out.println("Autor: " + book.getAutor());
 	            System.out.println("Rok vydani: " + book.getRok_vydani());
 	            System.out.println("Typ knihy: "+ book.getTyp());
-	            System.out.println("Pujceno: " + (book.stav_vypujcky() ? "Ano" : "Ne"));
+	            System.out.println("Pujceno: " + (book.getStav_vypujcky() ? "Ano" : "Ne"));
 	            System.out.println();
 			}
 		} else {
@@ -300,10 +315,10 @@ public class knihovna {
 	                boolean stav_vypujcky = bookData[4].equalsIgnoreCase("Yes");
 	                if (typ.equalsIgnoreCase("roman")) {
 	                    Zanr zanr = Zanr.valueOf(bookData[5]);
-	                    knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, zanr, 0));
+	                    knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, zanr, 0, stav_vypujcky));
 	                } else if (typ.equalsIgnoreCase("ucebnica")) {
 	                    int rocniKod = Integer.parseInt(bookData[6]);
-	                    knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, null, rocniKod));
+	                    knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, null, rocniKod, stav_vypujcky));
 	                }
 	            } else {
 	                System.err.println("Spatny format: " + fileName);
@@ -345,6 +360,11 @@ public class knihovna {
 			cislo = pouzeCelaCisla(sc);
 		}
 		return cislo;
+	}
+
+	public static void put(String nazev, book book) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
