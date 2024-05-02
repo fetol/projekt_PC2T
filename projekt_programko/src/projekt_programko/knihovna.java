@@ -230,20 +230,14 @@ public class knihovna {
 			 }
 	 	}
 	public void vraceni(String nazev) {
-	    // Check if the book exists in the library
-	    book book = knihovna.get(nazev); // Assuming 'Book' is the class name
+	    book book = knihovna.get(nazev);
 	    if (book != null) {
-	        // Check if the book is currently borrowed
 	        if (book.stav_vypujcky()==true) {
-	            // If the book is not borrowed, mark it as returned
-	            book.set_stav_vypujcky(false);
 	            System.out.println("Kniha " + nazev + " byla vracena");
 	        } else {
-	            // If the book is already returned, inform the user
 	            System.out.println("Kniha " + nazev + " jiz byla vracena!");
 	        }
 	    } else {
-	        // If the book is not found in the library, inform the user
 	        System.out.println("Kniha " + nazev + " nebyla nalezena");
 	    }
 	}
@@ -296,7 +290,7 @@ public class knihovna {
 	    boolean success = true;
 	    try {
 	        in = new BufferedReader(new FileReader(fileName));
-	        String line = in.readLine(); // Přeskočíme hlavičku souboru
+	        String line = in.readLine(); 
 	        line = in.readLine();
 	        while (line != null) {
 	            String[] bookData = line.split(",");
@@ -352,15 +346,6 @@ public class knihovna {
 	   
 }
 	
-
-		
-	
-	
-	 
-		 
-	
-	//DODELAT!!!! Nacitani knihy ze souboru
-	// DODELAT!!! SQL NACITANI A UKLADANI 
 	
 	
 	

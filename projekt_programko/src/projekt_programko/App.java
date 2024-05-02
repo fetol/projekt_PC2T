@@ -52,8 +52,8 @@ public class App {
 		String autor2;
 		autor.clear();
 		Zanr zanr;
+		SQL.connect();
 		boolean run=true;
-        //DatabaseConnection.nacitatzDB();
 		while(run)
 		
 		{
@@ -130,7 +130,7 @@ public class App {
 		            knihovna.podlezanru(zanr);
 					break;
 				case 9:
-					knihovna.listovaniPujcenychKnih(); //nejde lebo nejde pujcovanie
+					knihovna.listovaniPujcenychKnih(); 
 					break;
 				case 10:
 					System.out.println("Zadejte nazev knihy k ulozeni");
