@@ -1,2 +1,0 @@
-Nazev,Autor,Rok vydani Typ ,pujceno
-java,roman, peter,1992,roman,Yes

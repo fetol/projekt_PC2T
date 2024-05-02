@@ -171,8 +171,6 @@ public class knihovna {
 				 	System.out.println("Nazev: " + book.getNazev());
 	                System.out.println("Rok vydani: " + book.getRok_vydani());
 	                System.out.println("Typ knihy: "+ book.getTyp());
-	                System.out.println("Zaner: "+ book.getZanr());
-		            System.out.println("Pre triedu: "+ book.getRocniKod());
 	                System.out.println();
 	                found = true;	
 			}
@@ -186,8 +184,8 @@ public class knihovna {
 		book book = knihovna.get(nazev);
 		if (book != null) {
 			try(PrintWriter writer = new PrintWriter(new FileWriter(nazev + ".txt"))){
-				writer.println("Nazev,Autor,Rok vydani Typ ,pujceno");
-                writer.println(book.getNazev() + "," + String.join(", ", book.getAutor()) + "," + book.getRok_vydani() + ","+ (book.getTyp()) + "," +(book.stav_vypujcky() ? "Yes" : "No"));
+				writer.println("Nazev,Autor,Rok vydani Typ ,pujceno, zanr, rocnik id");
+                writer.println(book.getNazev() + "," + String.join(", ", book.getAutor()) + "," + book.getRok_vydani() + ","+ (book.getTyp()) + "," +(book.stav_vypujcky() ? "Yes"+ "," : "No" + "," +(book.getZanr()+"," + (book.getRocniKod()))));
                 System.out.println("Kniha byla ulozena do souboru: " + nazev + ".txt");
 				
 			} catch (IOException e) {
@@ -233,6 +231,7 @@ public class knihovna {
 	    book book = knihovna.get(nazev);
 	    if (book != null) {
 	        if (book.stav_vypujcky()==true) {
+	        	book.set_stav_vypujcky(false);
 	            System.out.println("Kniha " + nazev + " byla vracena");
 	        } else {
 	            System.out.println("Kniha " + nazev + " jiz byla vracena!");
@@ -289,27 +288,32 @@ public class knihovna {
 	    BufferedReader in = null;
 	    boolean success = true;
 	    try {
-	        in = new BufferedReader(new FileReader(fileName));
-	        String line = in.readLine(); 
-	        line = in.readLine();
-	        while (line != null) {
+	        in = new BufferedReader(new FileReader(fileName + ".txt"));
+	        String line = in.readLine(); // Read and ignore header line
+	        while ((line = in.readLine()) != null) {
 	            String[] bookData = line.split(",");
-	            String nazev = bookData[0];
-	            List<String> autor = Arrays.asList(bookData[1].split(","));
-	            int rok_vydani = Integer.parseInt(bookData[2]);
-	            String typ = bookData[3];
-	            boolean stav_vypujcky = bookData[4].equalsIgnoreCase("Yes");
-	            if (typ.equalsIgnoreCase("roman")) {
-	                Zanr zanr = Zanr.valueOf(bookData[5]);
-	                knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, zanr, 0));
-	            } else if (typ.equalsIgnoreCase("ucebnica")) {
-	                int rocniKod = Integer.parseInt(bookData[6]);
-	                knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, null, rocniKod));
+	            if (bookData.length == 7) { // Ensure correct number of elements
+	                String nazev = bookData[0];
+	                List<String> autor = Arrays.asList(bookData[1].split(","));
+	                int rok_vydani = Integer.parseInt(bookData[2]);
+	                String typ = bookData[3];
+	                boolean stav_vypujcky = bookData[4].equalsIgnoreCase("Yes");
+	                if (typ.equalsIgnoreCase("roman")) {
+	                    Zanr zanr = Zanr.valueOf(bookData[5]);
+	                    knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, zanr, 0));
+	                } else if (typ.equalsIgnoreCase("ucebnica")) {
+	                    int rocniKod = Integer.parseInt(bookData[6]);
+	                    knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, null, rocniKod));
+	                }
+	            } else {
+	                System.err.println("Spatny format: " + fileName);
+	                success = false;
+	                break; // Exit the loop if there's an error
 	            }
-	            line = in.readLine();
 	        }
-	    } catch (IOException e) {
-	        System.out.println("Soubor nelze otevřít");
+	    } catch (IOException | NumberFormatException e) {
+	        System.err.println("Error reading file: " + fileName);
+	        e.printStackTrace();
 	        success = false;
 	    } finally {
 	        try {
@@ -317,12 +321,14 @@ public class knihovna {
 	                in.close();
 	            }
 	        } catch (IOException e) {
-	            System.out.println("Soubor nelze zavřít");
+	            System.err.println("Error closing file: " + fileName);
+	            e.printStackTrace();
 	            success = false;
 	        }
 	    }
 	    return success;
 	}
+
 	
 	public static int pouzeCelaCisla(Scanner sc) 
 	{
