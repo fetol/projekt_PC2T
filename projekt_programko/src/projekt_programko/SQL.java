@@ -37,7 +37,7 @@ public class SQL {
          String sql = "SELECT * FROM " + tabulka;
          try (Connection con = connect();
               Statement stmt = con.createStatement();
-              ResultSet rs = stmt.executeQuery(sql)) {-
+              ResultSet rs = stmt.executeQuery(sql)) {
              while (rs.next()) {
                  String nazev = rs.getString("nazev");
                  List<String> autor = Arrays.asList(rs.getString("autor").split(", "));
