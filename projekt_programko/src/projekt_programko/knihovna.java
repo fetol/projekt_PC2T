@@ -21,11 +21,17 @@ public class knihovna {
 	        
 	        scanner.nextLine();
 
-	        System.out.println("Zadaj nazov: ");
-	        String nazev = scanner.nextLine();
+	        String nazev = "";
+	        do {
+	            System.out.println("Zadaj nazov: ");
+	            nazev = scanner.nextLine();
+	            if(nazev.matches(".*\\d.*")) {
+	                System.out.println("Nazov cannot contain numbers. Please try again.");
+	            }
+	        } while(nazev.matches(".*\\d.*"));
 
-	        System.out.println("Zadaj autora ak viac oddel ich ciarkov: ");
-	        String[] authorsArray = scanner.nextLine().split(",");
+	        System.out.println("Zadaj autora ak viac oddel ich bodkociarkov: ");
+	        String[] authorsArray = scanner.nextLine().split(";");
 	        List<String> autor = new ArrayList<>();
 	        for (String author : authorsArray) {
 	            autor.add(author.trim());
@@ -42,9 +48,10 @@ public class knihovna {
 	            Zanr zanr = Zanr.values()[zanerChoice - 1];
 	            knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, zanr, rocniKod, false));
 	            System.out.println("Ucebnica pridana do kniznice: " + nazev);
-	            
 	            System.out.println("Typ: Ucebnica");
 	            System.out.println("Trieda cislo: " + rocniKod);
+	            book book = datakniha(nazev);
+				SQL.Upload(book);
 	        } else if (bookVyber == 2) {
 	        	String typ="roman";
 	            System.out.println("Vyber si zaner:");
@@ -59,12 +66,11 @@ public class knihovna {
 	            System.out.println("Roman pridany do kniznice: " + nazev);
 	            System.out.println("Typ: Roman");
 	            System.out.println("Zaner: " + zanr);
+	            book book = datakniha(nazev);
+				SQL.Upload(book);
 	        } else {
 	            System.out.println("Zly input.Kniha neni pridana do kniznice.");
 	        }
-	        book book = datakniha(nazev);
-			
-			SQL.Upload(book);
 	    }
 	
 	 public void updateKnihy(String nazev, Scanner scanner) throws SQLException {
@@ -72,7 +78,7 @@ public class knihovna {
 	        if (book != null) {
 	            System.out.println("Aktualne udaje o knihe:");
 	            System.out.println("Nazev: " + book.getNazev());
-	            System.out.println("Autor: " + String.join(", ", book.getAutor()));
+	            System.out.println("Autor: " + String.join("; ", book.getAutor()));
 	            System.out.println("Rok vydani: " + book.getRok_vydani());
 	            System.out.println("Pujceno: " + (book.getStav_vypujcky() ? "Ano" : "Ne"));
 	            
@@ -105,17 +111,20 @@ public class knihovna {
 	            }
 
 	            System.out.println("Kniha aktualizovana.");
+	            SQL.Update(book);
 	        } else {
 	            System.out.println("Kniha nenajdena.");
 	        }
-	        SQL.Update(book);
 	    }
 		
-	public boolean smazaniknihy(String nazev) {
-		if (knihovna.remove(nazev)!=null)
-			return true;
-		return false;
-		}
+	 public boolean smazaniknihy(String nazev) throws SQLException {
+		 book book = datakniha(nazev);
+		    if (book != null && knihovna.remove(nazev) != null) {
+		        SQL.Delete(book);
+		        return true;
+		    }		
+			return false;
+			}
 		
 		
 	public void listovaniKnih() {
@@ -134,10 +143,10 @@ public class knihovna {
 	  }
 	public book datakniha(String nazev) {
 		
-		for (book book : knihovna.values()) {
-            if(book.getNazev() == nazev) {
-            	return book;
-            }
+		 for (book book : knihovna.values()) {
+		        if(book.getNazev().equals(nazev)) {
+		            return book;
+		        }
         }
 		
 		return null;
@@ -196,7 +205,7 @@ public class knihovna {
 		if (book != null) {
 			try(PrintWriter writer = new PrintWriter(new FileWriter(nazev + ".txt"))){
 				writer.println("Nazev,Autor,Rok vydani Typ ,pujceno, zanr, rocnik id");
-                writer.println(book.getNazev() + "," + String.join(", ", book.getAutor()) + "," + book.getRok_vydani() + ","+ (book.getTyp()) + "," +(book.getStav_vypujcky() ? "Yes"+ "," : "No" + "," +(book.getZanr()+"," + (book.getRocniKod()))));
+                writer.println(book.getNazev() + "," + String.join("; ", book.getAutor()) + "," + book.getRok_vydani() + ","+ (book.getTyp()) + "," +(book.getStav_vypujcky() ? "Yes"+ "," : "No" + "," +(book.getZanr()+"," + (book.getRocniKod()))));
                 System.out.println("Kniha byla ulozena do souboru: " + nazev + ".txt");
 				
 			} catch (IOException e) {
@@ -224,25 +233,27 @@ public class knihovna {
 		}
 	}
 	 
-	public void vypujceni(String nazev) {
+	public void vypujceni(String nazev) throws SQLException {
 		book book = knihovna.get(nazev);
 		 if (book !=null) {
 			 if(!book.getStav_vypujcky()) {
 				 book.setStav_vypujcky(true);
+				 SQL.Update(book);
 				 System.out.println("Kniha " + nazev + " byla vypujcena");
 			 } else {
 				 System.out.println("Kniha " + nazev + " jiz byla vypujcena!");
 			 } 
 			 } else {
-				 System.out.println("Kniha " + nazev + " Nebyla nalezena");
+				 System.out.println("Kniha " + nazev + " nebyla nalezena");
 				 
 			 }
 	 	}
-	public void vraceni(String nazev) {
+	public void vraceni(String nazev) throws SQLException {
 	    book book = knihovna.get(nazev);
 	    if (book != null) {
 	        if (book.getStav_vypujcky()==true) {
 	        	book.setStav_vypujcky(false);
+	        	SQL.Update(book);
 	            System.out.println("Kniha " + nazev + " byla vracena");
 	        } else {
 	            System.out.println("Kniha " + nazev + " jiz byla vracena!");
@@ -295,11 +306,11 @@ public class knihovna {
 		
 		
 	}
-	public boolean nahrajzSouboru(String fileName) {
+	public boolean nahrajzSouboru(String nazov_souboru) throws SQLException {
 	    BufferedReader in = null;
 	    boolean success = true;
 	    try {
-	        in = new BufferedReader(new FileReader(fileName + ".txt"));
+	        in = new BufferedReader(new FileReader(nazov_souboru + ".txt"));
 	        String line = in.readLine(); // Read and ignore header line
 	        while ((line = in.readLine()) != null) {
 	            String[] bookData = line.split(",");
@@ -312,18 +323,22 @@ public class knihovna {
 	                if (typ.equalsIgnoreCase("roman")) {
 	                    Zanr zanr = Zanr.valueOf(bookData[5]);
 	                    knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, zanr, 0, stav_vypujcky));
+	                    book book = datakniha(nazev);
+	    				SQL.Upload(book);
 	                } else if (typ.equalsIgnoreCase("ucebnica")) {
 	                    int rocniKod = Integer.parseInt(bookData[6]);
 	                    knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, null, rocniKod, stav_vypujcky));
+	                    book book = datakniha(nazev);
+						SQL.Upload(book);
 	                }
 	            } else {
-	                System.err.println("Spatny format: " + fileName);
+	                System.err.println("Spatny format: " + nazov_souboru);
 	                success = false;
-	                break; // Exit the loop if there's an error
+	                break;
 	            }
 	        }
 	    } catch (IOException | NumberFormatException e) {
-	        System.err.println("Error reading file: " + fileName);
+	        System.err.println("Error neviem precitat soubor: " + nazov_souboru);
 	        e.printStackTrace();
 	        success = false;
 	    } finally {
@@ -332,7 +347,7 @@ public class knihovna {
 	                in.close();
 	            }
 	        } catch (IOException e) {
-	            System.err.println("Error closing file: " + fileName);
+	            System.err.println("Error pri zatvarani souboru: " + nazov_souboru);
 	            e.printStackTrace();
 	            success = false;
 	        }
@@ -351,7 +366,7 @@ public class knihovna {
 		catch(Exception e)
 		{
 			System.out.println("Nastala vyjimka typu "+e.toString());
-			System.out.println("zadejte prosim cele cislo ");
+			System.out.println("Zadejte prosim cele cislo: ");
 			sc.nextLine();
 			cislo = pouzeCelaCisla(sc);
 		}

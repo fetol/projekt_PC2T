@@ -52,7 +52,6 @@ public class App {
 		String autor2;
 		autor.clear();
 		Zanr zanr;
-		SQL.connect();
 		boolean run=true;
 		while(run)
 		
@@ -108,7 +107,6 @@ public class App {
 					break;
 				case 5:
 					 knihovna.listovaniKnih();
-					 
 					break;
 				case 6:
 					System.out.println("Zadaj nazov knihy?");

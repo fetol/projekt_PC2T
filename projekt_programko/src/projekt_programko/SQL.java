@@ -71,9 +71,7 @@ public class SQL {
              pstmt.executeUpdate();
     }
     public static void Update(book book) throws SQLException {
-    	String sql =
-    	"UPDATE " + "tabulka" + 
-        " SET nazev = ?, autor = ?, rok_vydani = ?, stav_vypujcky = ?" +
+    	String sql ="UPDATE " + "tabulka" +  " SET nazev = ?, autor = ?, rok_vydani = ?, stav_vypujcky = ?" +
         " WHERE nazev = ?";
     	Connection con = null;
     	
@@ -87,6 +85,13 @@ public class SQL {
              pstmt.setBoolean(4, book.getStav_vypujcky());
              pstmt.executeUpdate();
     }
-	
+    public static void Delete(book book) throws SQLException {
+    	String sql = "DELETE FROM tabulka WHERE nazev = ?";
+    	Connection con = null;
+    	con = DriverManager.getConnection(URL, USER, PASSWORD);
+    	PreparedStatement pstmt = con.prepareStatement(sql);
+    		 pstmt.setString(1, book.getNazev());
+             pstmt.executeUpdate();
+    }
 }
 	
