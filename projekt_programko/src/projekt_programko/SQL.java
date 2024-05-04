@@ -1,7 +1,6 @@
 package projekt_programko;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,9 +32,9 @@ public class SQL {
         	        return con;
             }
      public static HashMap<String, book> load(String tabulka) {
-         HashMap<String, book> knihovna = new HashMap<>();
+    	 HashMap<String, book> knihovna = new HashMap<>();
          String sql = "SELECT * FROM " + tabulka;
-         try (Connection con = connect();
+         try (Connection con = SQL.connect();
               Statement stmt = con.createStatement();
               ResultSet rs = stmt.executeQuery(sql)) {
              while (rs.next()) {
@@ -53,8 +52,7 @@ public class SQL {
              e.printStackTrace();
          }
          return knihovna;
-     }
-        
+     } 
      
     public static void Upload(book book) throws SQLException {
     	String sql = "INSERT INTO " + "tabulka" + " (nazev, autor, rok_vydani, typ, zanr, rocniKod, stav_vypujcky) VALUES (?, ?, ?, ?, ?, ?, ?)";

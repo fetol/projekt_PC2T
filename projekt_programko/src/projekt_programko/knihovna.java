@@ -1,20 +1,16 @@
 package projekt_programko;
-import java.awt.print.Book;
+
 import java.io.*;
 import java.util.*;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class knihovna {
 	private Map<String, book> knihovna;
 	
 	public knihovna() {
-		this.knihovna = new HashMap<>();
+		this.knihovna = SQL.load("tabulka");
 	}
 	
 	 public void addKnihu(Scanner scanner) throws SQLException {
@@ -362,13 +358,6 @@ public class knihovna {
 		return cislo;
 	}
 
-	public static void put(String nazev, book book) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	    
 	   
 }
 	

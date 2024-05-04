@@ -45,8 +45,7 @@ public class App {
 
 	public static void main(String[] args) throws SQLException {
 
-		
-		knihovna knihovna = new knihovna();
+		knihovna knihovna=new knihovna();
 		Scanner sc=new Scanner(System.in);
 		String nazev = null;
 		List<String> autor=new ArrayList<>();
@@ -54,8 +53,6 @@ public class App {
 		autor.clear();
 		Zanr zanr;
 		SQL.connect();
-		String tabulka = "tabulka";
-		SQL.load(tabulka);
 		boolean run=true;
 		while(run)
 		
@@ -80,8 +77,6 @@ public class App {
 			{
 				case 1:
 					knihovna.addKnihu(sc);
-					
-					
 					break;
 				case 2:
 					System.out.println("Zadejte nazev knihy k editovaniu");
