@@ -50,8 +50,6 @@ public class knihovna {
 	            System.out.println("Ucebnica pridana do kniznice: " + nazev);
 	            System.out.println("Typ: Ucebnica");
 	            System.out.println("Trieda cislo: " + rocniKod);
-	            book book = datakniha(nazev);
-				SQL.Upload(book);
 	        } else if (bookVyber == 2) {
 	        	String typ="roman";
 	            System.out.println("Vyber si zaner:");
@@ -66,11 +64,11 @@ public class knihovna {
 	            System.out.println("Roman pridany do kniznice: " + nazev);
 	            System.out.println("Typ: Roman");
 	            System.out.println("Zaner: " + zanr);
-	            book book = datakniha(nazev);
-				SQL.Upload(book);
 	        } else {
 	            System.out.println("Zly input.Kniha neni pridana do kniznice.");
 	        }
+	        book book = datakniha(nazev);
+			SQL.Upload(book);
 	    }
 	
 	 public void updateKnihy(String nazev, Scanner scanner) throws SQLException {
@@ -274,7 +272,7 @@ public class knihovna {
 		}
 		Collections.sort(knizkypodleautora, (kniha1, kniha2) -> Integer.compare(kniha1.getRok_vydani(), kniha2.getRok_vydani()));
 			if(!knizkypodleautora.isEmpty()) {
-				System.out.println("Knihy podle autora " + autor + " (chronologicky)");
+				System.out.println("Knihy podle autora " + autor + " (chronologicky):");
 				for (book book : knizkypodleautora) {
 					System.out.println("Nazev: "+ book.getNazev());
 					System.out.println("Rok vydaní: " + book.getRok_vydani());

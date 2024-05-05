@@ -52,6 +52,7 @@ public class SQL {
              e.printStackTrace();
          }
          return knihovna;
+        
      } 
      
     public static void Upload(book book) throws SQLException {
@@ -84,6 +85,7 @@ public class SQL {
              pstmt.setString(5, book.getNazev());
              pstmt.setBoolean(4, book.getStav_vypujcky());
              pstmt.executeUpdate();
+             SQL.disconnect(con);
     }
     public static void Delete(book book) throws SQLException {
     	String sql = "DELETE FROM tabulka WHERE nazev = ?";
@@ -92,6 +94,16 @@ public class SQL {
     	PreparedStatement pstmt = con.prepareStatement(sql);
     		 pstmt.setString(1, book.getNazev());
              pstmt.executeUpdate();
+    }
+    public static void disconnect(Connection con) {
+        try {
+            if (con != null && !con.isClosed()) {
+                con.close();
+                System.out.println("Odpojeny od databaze.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
 	

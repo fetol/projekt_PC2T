@@ -145,6 +145,7 @@ public class App {
 						System.out.println("Knihu nebolo mozno nacist");
 					break;			
 				case 12:
+					System.out.println("Program sa ukoncil");
 					run=false;
 					break;
 				
