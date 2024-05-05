@@ -53,7 +53,6 @@ public class SQL {
              e.printStackTrace();
          }
          return knihovna;
-        
      } 
      
     public static void Upload(book book) throws SQLException {
