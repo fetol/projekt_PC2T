@@ -31,6 +31,7 @@ public class SQL {
         	        }
         	        return con;
             }
+     
      public static HashMap<String, book> load(String tabulka) {
     	 HashMap<String, book> knihovna = new HashMap<>();
          String sql = "SELECT * FROM " + tabulka;
