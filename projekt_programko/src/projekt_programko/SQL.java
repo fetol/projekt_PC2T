@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLNonTransientConnectionException;
-import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -64,7 +63,7 @@ public class SQL {
     	 try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD)) {
              PreparedStatement pstmt = con.prepareStatement(sql);
              pstmt.setString(1, book.getNazev());
-             pstmt.setString(2, String.join(", ", book.getAutor()));
+             pstmt.setString(2, String.join("` ", book.getAutor()));
              pstmt.setInt(3, book.getRok_vydani());
              pstmt.setString(4, book.getTyp());
              pstmt.setString(5, book.getZanr().toString());

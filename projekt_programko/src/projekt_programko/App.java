@@ -76,13 +76,13 @@ public class App {
 			{
 				case 1:
 					knihovna.addKnihu(sc);
-					SQL.disconnect();
+					
 					break;
 				case 2:
 					System.out.println("Zadejte nazev knihy k editovaniu");
 					nazev=sc.next();
 				    knihovna.updateKnihy(nazev, sc);
-				    SQL.disconnect();
+				    
 				    break;
 				case 3:
 					System.out.println("Zadejte nazev knihy k odstraneni");
@@ -106,7 +106,7 @@ public class App {
 						 	nazev=sc.next();
 				            knihovna.vypujceni(nazev);	
 				        }
-					 SQL.disconnect();
+					 
 					break;
 				case 5:
 					 knihovna.listovaniKnih();
@@ -149,6 +149,7 @@ public class App {
 					break;			
 				case 12:
 					System.out.println("Program sa ukoncil");
+					SQL.disconnect();
 					run=false;
 					break;
 				

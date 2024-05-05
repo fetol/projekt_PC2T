@@ -325,7 +325,8 @@ public class knihovna {
 	    				SQL.Upload(book);
 	                } else if (typ.equalsIgnoreCase("ucebnica")) {
 	                    int rocniKod = Integer.parseInt(bookData[6]);
-	                    knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, null, rocniKod, stav_vypujcky));
+	                    Zanr zanr = Zanr.values()[5];
+	                    knihovna.put(nazev, new book(nazev, autor, rok_vydani, typ, zanr, rocniKod, stav_vypujcky));
 	                    book book = datakniha(nazev);
 						SQL.Upload(book);
 	                }
