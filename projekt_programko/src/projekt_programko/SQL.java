@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLNonTransientConnectionException;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -99,16 +100,24 @@ public class SQL {
              System.err.println("Failed to delete book: " + e.getMessage());
          }
     }
-    	
+    
     public static void disconnect() {
         try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            if (con != null && !con.isClosed()) {
-                con.close();
-                System.out.println("Disconnected from the database.");
+            if (con != null) {
+                if (!con.isClosed()) {
+                    con.close();
+                    System.out.println("Disconnected from the database.");
+                } else {
+                    System.out.println("Already disconnected from the database.");
+                }
+            } else {
+                System.out.println("Not connected to the database.");
             }
+        } catch (SQLNonTransientConnectionException e) {
+            System.err.println("Failed to disconnect from the database: Too many connections");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Failed to disconnect from the database: " + e.getMessage());
         }
     }
-}
+    }
 	
