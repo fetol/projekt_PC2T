@@ -32,12 +32,12 @@ public class SQL {
         	        return con;
             }
      
-     public static HashMap<String, book> load(String tabulka) {
+     public static HashMap<String, book> load(String tabulka)  {
     	 HashMap<String, book> knihovna = new HashMap<>();
          String sql = "SELECT * FROM " + tabulka;
-         try (Connection con = SQL.connect();
-              Statement stmt = con.createStatement();
-              ResultSet rs = stmt.executeQuery(sql)) {
+         try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD)) {
+             PreparedStatement pstmt = con.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery();
              while (rs.next()) {
                  String nazev = rs.getString("nazev");
                  List<String> autor = Arrays.asList(rs.getString("autor").split(", "));
@@ -45,24 +45,24 @@ public class SQL {
                  String typ = rs.getString("typ");
                  Zanr zanr = Zanr.valueOf(rs.getString("zanr"));
                  int rocniKod = rs.getInt("rocniKod");
-                 Boolean stav_vypujcky = rs.getBoolean("stav_vypujcky");
+                 boolean stav_vypujcky = rs.getBoolean("stav_vypujcky");
                  book book = new book(nazev, autor, rok_vydani, typ, zanr, rocniKod, stav_vypujcky);
                  knihovna.put(nazev, book);
              }
+             rs.close();
+             pstmt.close();
          } catch (SQLException e) {
-             e.printStackTrace();
+             System.err.println("Failed to load data from the database: " + e.getMessage());
          }
+         
          return knihovna;
-     } 
+     }
      
     public static void Upload(book book) throws SQLException {
     	String sql = "INSERT INTO " + "tabulka" + " (nazev, autor, rok_vydani, typ, zanr, rocniKod, stav_vypujcky) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    	Connection con = null;
-    	
-    	con = DriverManager.getConnection(URL, USER, PASSWORD);
-    	
-    	PreparedStatement pstmt = con.prepareStatement(sql);
-    		 pstmt.setString(1, book.getNazev());
+    	 try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD)) {
+             PreparedStatement pstmt = con.prepareStatement(sql);
+             pstmt.setString(1, book.getNazev());
              pstmt.setString(2, String.join(", ", book.getAutor()));
              pstmt.setInt(3, book.getRok_vydani());
              pstmt.setString(4, book.getTyp());
@@ -70,31 +70,36 @@ public class SQL {
              pstmt.setInt(6, book.getRocniKod());
              pstmt.setBoolean(7, book.getStav_vypujcky());
              pstmt.executeUpdate();
+         } catch (SQLException e) {
+        	 System.err.println("Failed to update book: " + e.getMessage());
+         }
     }
     public static void Update(book book) throws SQLException {
     	String sql ="UPDATE " + "tabulka" +  " SET nazev = ?, autor = ?, rok_vydani = ?, stav_vypujcky = ?" +
         " WHERE nazev = ?";
-    	Connection con = null;
-    	
-    	con = DriverManager.getConnection(URL, USER, PASSWORD);
-    	
-    	PreparedStatement pstmt = con.prepareStatement(sql);
-    		 pstmt.setString(1, book.getNazev());
-             pstmt.setString(2, String.join(", ", book.getAutor()));
-             pstmt.setInt(3, book.getRok_vydani());
-             pstmt.setString(5, book.getNazev());
-             pstmt.setBoolean(4, book.getStav_vypujcky());
-             pstmt.executeUpdate();
-             SQL.disconnect(con);
+    	try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, book.getNazev());
+            pstmt.setString(2, String.join(", ", book.getAutor()));
+            pstmt.setInt(3, book.getRok_vydani());
+            pstmt.setBoolean(4, book.getStav_vypujcky());
+            pstmt.setString(5, book.getNazev());
+            pstmt.executeUpdate();
+    	} catch (SQLException e) {
+            System.err.println("Failed to update book: " + e.getMessage());
+        }
     }
     public static void Delete(book book) throws SQLException {
     	String sql = "DELETE FROM tabulka WHERE nazev = ?";
-    	Connection con = null;
-    	con = DriverManager.getConnection(URL, USER, PASSWORD);
-    	PreparedStatement pstmt = con.prepareStatement(sql);
-    		 pstmt.setString(1, book.getNazev());
-             pstmt.executeUpdate();
+    	try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, book.getNazev());
+            pstmt.executeUpdate();
+    	 } catch (SQLException e) {
+             System.err.println("Failed to delete book: " + e.getMessage());
+         }
     }
+    	
     public static void disconnect(Connection con) {
         try {
             if (con != null && !con.isClosed()) {

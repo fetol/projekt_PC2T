@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class knihovna {
 	private Map<String, book> knihovna;
 	
-	public knihovna() {
+	public knihovna()  {
 		this.knihovna = SQL.load("tabulka");
 	}
 	
@@ -231,7 +231,7 @@ public class knihovna {
 		}
 	}
 	 
-	public void vypujceni(String nazev) throws SQLException {
+	public void vypujceni(String nazev) throws SQLException  {
 		book book = knihovna.get(nazev);
 		 if (book !=null) {
 			 if(!book.getStav_vypujcky()) {
