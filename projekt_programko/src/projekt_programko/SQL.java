@@ -100,11 +100,11 @@ public class SQL {
          }
     }
     	
-    public static void disconnect(Connection con) {
-        try {
+    public static void disconnect() {
+        try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD)) {
             if (con != null && !con.isClosed()) {
                 con.close();
-                System.out.println("Odpojeny od databaze.");
+                System.out.println("Disconnected from the database.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
