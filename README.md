@@ -8,6 +8,6 @@ a stav dostupnosti (k dispozici / vypůjčeno). Existují dva typy knih:
  Autors
 - Michal Bilka
 * Oldrich Hana
-Dna 7.5.2024 nam umrela databaza nechce s  nami uz spolupracovat
+<brDna 7.5.2024 nam umrela databaza nechce s  nami uz spolupracovat />
 ![image](https://github.com/fetol/projekt_PC2T/assets/95187435/d23eb9cc-c926-455d-a919-ef5841c33524)
 
